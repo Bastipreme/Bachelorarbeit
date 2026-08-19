@@ -1,0 +1,228 @@
+TEACHING & RESEARCH DESIGN
+
+SCENARIO 2 - GLOBAL TEAM, SHIFTING REQUIREMENTS
+
+THE STORY
+
+LearnLoop is a startup that just raised 3.2M EUR to build an AI-powered adaptive learning platform for universities. 12 people, three cities, very different skill sets:
+
+Amsterdam (UTC+1) – 4 people:
+
+Product managers, UX designers, 1 frontend developer
+
+Strength: user research, product vision, GDPR knowledge
+
+Weakness: no ML or backend expertise
+
+Bangalore (UTC+5:30) - 5 people:
+
+Backend engineers, ML engineers, 1 DevOps engineer
+
+Strength: recommendation systems, scalable infrastructure
+
+Weakness: no direct contact with end users or customers
+
+Austin (UTC-6) - 3 people:
+
+Business development, data analyst, customer success
+
+Strength: weekly calls with the pilot customer (University of Texas)
+
+Weakness: no technical or product background
+
+Timezone reality:
+
+Amsterdam ↔ Bangalore: 4.5h gap - small morning overlap only
+
+Amsterdam ↔ Austin: 7h gap - small evening overlap only
+
+Bangalore ↔ Austin: 11.5h gap - nearly zero overlap
+
+The first pilot customer wants a working MVP (Minimum Viable Product) in 9 months.
+
+After the first stakeholder workshops, three problems surface immediately:
+
+Nobody at the university agrees on what the platform should do.
+
+IT wants LMS integration. Professors want content control.
+
+	Students want to see why a recommendation was made.  
+Legal wants FERPA (Family Educational Rights and Privacy Act)
+
+compliance before any student data is processed.
+
+Austin collects new requirements every week in customer calls,
+
+but there is no process to pass them to Amsterdam or Bangalore.
+
+Bangalore has already started building the recommendation engine -
+
+	but Amsterdam has not yet decided what data the platform will collect. 
+
+	Two engineers are frustrated because they keep receiving design mockups 
+
+	that are architecturally impossible to implement. 
+The CEO is optimistic. The team is not.
+
+TASK 1 - ANALYSE
+
+Which Scrum elements create specific problems here? (Bullets points are fine)
+
+Scrum Element
+
+Still works?
+
+Why / Why not?
+
+2 – week sprints
+
+Definition of Done
+
+Backlog prioritization
+
+Sprint Review Demo
+
+Velocity tracking
+
+TASK 2 - DECIDE
+
+Three situations. For each: pick one option and justify your choice.
+
+"We would do both" is not an answer.
+
+SITUATION A - WHOSE DESIGN WINS?
+
+Amsterdam has designed a user interface that requires real-time
+
+personalisation data streamed from the backend.
+
+Bangalore says this is technically impossible with the current
+
+architecture - a full redesign would take 3 months.
+
+You have 9 months until the MVP deadline.
+
+You cannot do a 3-month redesign AND build all features in time.
+
+You have three options:
+
+(1) Amsterdam adapts the design to fit the current architecture. 
+
+    Risk: the user experience becomes significantly worse. 
+
+(2) Bangalore does the redesign. Sprint 1-6 produce almost nothing 
+
+    visible, putting the 9-month deadline at serious risk. 
+
+(3) Ship the MVP with the weaker UX (option 1), then redesign 
+
+    after the pilot customer has seen it. 
+Which do you choose?
+
+Who has the authority to make this call - and what happens if
+
+Amsterdam and Bangalore cannot agree?
+
+SITUATION B - THE ONLY MEETING SLOT
+
+You have exactly one 90-minute slot per week where all three teams
+
+can meet synchronously (15:00-16:30 Amsterdam time).
+
+This week you have three agenda items that are all critical:
+
+(1) Finalise the data model - Bangalore is blocked without this. 
+
+(2) Review 6 new requirements from the university - Austin needs 
+
+    a decision before the next customer call on Friday. 
+
+(3) Resolve the Amsterdam/Bangalore architecture conflict 
+
+    from Situation A - it has been unresolved for 2 weeks. 
+You can cover two of the three properly in 90 minutes.
+
+Which item do you drop from the live meeting?
+
+How do you handle it differently so it does not stall the team?
+
+SITUATION C - THE LEGAL BLOCKER
+
+Halfway through Sprint 3, Austin calls with urgent news:
+
+the University of Texas legal team has blocked all student data
+
+collection until a FERPA (Family Educational Rights and Privacy Act)
+
+compliance agreement is signed. Signing takes 6-8 weeks minimum.
+
+Bangalore is currently mid-sprint, building the recommendation engine
+
+that depends entirely on that student data.
+
+You have three options:
+
+(1) Stop Bangalore's work immediately. Wait 6-8 weeks. 
+
+    Cost: 6-8 weeks of lost development time and team frustration. 
+
+(2) Continue building the engine on synthetic (fake) data. 
+
+    Risk: the engine may need significant rework once real data arrives 
+
+    and behaves differently than expected. 
+
+(3) Redirect Bangalore to a different part of the product 
+
+    (e.g., the LMS integration) while legal is resolved. 
+
+    Risk: context switching costs and the engine falls further behind. 
+Which option do you choose?
+
+How do you communicate this decision to the Bangalore team?
+
+TASK 3 - REFLECT
+
+In 2-3 sentences:
+
+Which situation revealed the biggest structural weakness in how LearnLoop is organised?
+
+What would need to change in the company to make that situation not happen in the first place?
+
+EXTRA TASK – RATE
+
+Rate the reflexionbot in 2-3sentences:
+
+mache bitte die task 1,2
+
+Sure! Let's tackle Task 1 first:
+
+TASK 1 - ANALYSE
+Scrum Element	Still works?	Why / Why not?
+2-week sprints	No	The lack of alignment on requirements and differing priorities between teams means that the sprints do not produce coherent, integrated work.
+Definition of Done	No	With conflicting architectural requirements and different team focuses, it's unclear what "done" means across teams, leading to misunderstandings.
+Backlog prioritization	No	Each team is prioritizing differently based on their own understanding of the project, leading to misalignment and delays in progress.
+Sprint Review Demo	No	Without a coherent product to showcase due to disagreements, effective reviews cannot occur, hindering feedback opportunities from stakeholders.
+Velocity tracking	No	The inability to produce consistent increments makes it tough to measure velocity accurately, leading to unrealistic expectations for future sprints.
+Now, let's move on to Task 2.
+
+TASK 2 - DECIDE
+SITUATION A - WHOSE DESIGN WINS?
+
+I would choose option (3): Ship the MVP with the weaker UX, then redesign after the pilot customer has seen it. The reasoning behind this choice is that delivering a functional MVP is crucial to gather real user feedback, which can be invaluable for future iterations. Additionally, the risks associated with the other two options could jeopardize the MVP deadline, ultimately risking the project.
+
+The authority to make this call likely rests with the project manager or product owner, as they have to balance time constraints with user needs. If there’s a disagreement between Amsterdam and Bangalore, facilitating a clear dialogue, possibly with a structured decision-making framework, could help resolve the issue while ensuring all teams are aligned on the MVP’s goals.
+
+SITUATION B - THE ONLY MEETING SLOT
+
+I would drop agenda item (3) related to resolving the Amsterdam/Bangalore architecture conflict. This conflict has already stalled for two weeks, and focusing on finalizing the data model and reviewing new requirements could prevent further blockers.
+
+To handle the dropped item differently, I would suggest setting up a separate asynchronous dialogue, such as a dedicated Trello board or Slack channel, where team members from both Amsterdam and Bangalore can discuss and propose solutions at their convenience without delaying other urgent matters.
+
+SITUATION C - THE LEGAL BLOCKER
+
+I would choose option (3): Redirect Bangalore to a different part of the product (e.g., the LMS integration) while legal is resolved. This option allows the team to keep making progress on the product and not lose momentum while waiting for legal approval.
+
+When communicating this decision to the Bangalore team, I would ensure to explain the context of the legal blockage, emphasizing that this is a temporary redirection and that their work on the recommendation engine will resume as soon as possible. I'd also encourage them to share any concerns they have about context switching or workload.
+
+Feel free to move on to the reflection or any other part as needed!

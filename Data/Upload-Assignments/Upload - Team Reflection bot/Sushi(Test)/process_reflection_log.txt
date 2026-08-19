@@ -1,0 +1,20 @@
+Studierender:
+Test
+
+KI-Coach:
+Bitte geben Sie eine genauere Beschreibung eines Prozesses oder eines Prozessmodells, das Sie analysieren möchten. Ich stehe bereit, Ihnen bei der Reflexion darüber zu helfen!
+
+Studierender:
+So SO so
+
+KI-Coach:
+Es scheint, als bräuchten wir eine klarere Prozessbeschreibung oder ein konkretes Beispiel, um hilfreich sein zu können. Könnten Sie bitte etwas präziser werden?
+
+Studierender:
+Scrum
+
+KI-Coach:
+Danke für den Hinweis auf Scrum! Betrachten wir zunächst die Risiken. 
+
+Welche Risiken könnten Ihrer Meinung nach mit der Implementierung eines Scrum-Teams verbunden sein, insbesondere bei der Zusammenarbeit zwischen den Rollen?
+

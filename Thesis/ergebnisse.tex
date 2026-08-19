@@ -1,0 +1,273 @@
+\chapter{Ergebnisse}
+\label{cha:ergebnisse}
+
+Dieses Kapitel berichtet die erhobenen Daten zunächst rein darstellend: den deskriptiven Überblick
+über Autorenschaft, Reflexionsstufen und Survey-Kennwerte (Abschnitt~\ref{sec:ergebnisse}), die
+Illustration des Kategoriensystems an realen Entscheidungssituationen
+(Abschnitt~\ref{sec:illustration-kategoriensystem}) sowie die Gegenüberstellung von Selbstauskunft und
+dokumentiertem Bearbeitungsverhalten (Abschnitt~\ref{sec:selbstauskunft-verhalten}). Die
+Interpretation dieser Befunde und die Beantwortung der Forschungsfragen erfolgen anschließend in
+Kapitel~\ref{cha: diskussion}.
+
+\section{Deskriptiver Überblick}
+\label{sec:ergebnisse}
+
+Dieser Abschnitt stellt die erhobenen Daten zunächst rein deskriptiv dar. Ihre inhaltliche
+Interpretation und die Beantwortung der Forschungsfragen erfolgen in Kapitel~\ref{cha: diskussion}.
+Angesichts der kleinen Stichprobe sind alle Werte deskriptiv zu lesen. Auf Inferenzstatistik wird
+bewusst verzichtet (vgl. Abschnitt~\ref{sec:datenanalyse}). Die vollständigen Tabellen finden sich in
+\hyperref[app:kodierungstabelle]{Anhang~A.2} bis \hyperref[app:statistik]{A.6}.
+
+\subsection*{Autorenschaft der Bearbeitungen}
+Von den 31 kodierten Analyseeinheiten ist die Autorenschaft nur bei 11 eindeutig studentisch.
+Tabelle~\ref{tab:ergebnisse-autorenschaft} schlüsselt die Verteilung nach Gruppe und nach Sicherheit
+der Einstufung auf. Fasst man die Kategorien \glqq unklar\grqq{} und \glqq KI-generiert\grqq{}
+zusammen, liegt der Anteil der Bearbeitungen ohne eindeutig studentische Autorenschaft bei Team AI bei
+80\,\% und beim Reflexionsbot bei 50\,\%. Betrachtet man dagegen nur die gesichert KI-generierten
+Fälle, fällt der Unterschied zwischen beiden Gruppen deutlich geringer aus.
+
+\begin{table}[htb]
+\centering
+\caption{Autorenschaft der kodierten Bearbeitungen nach Gruppe}
+\label{tab:ergebnisse-autorenschaft}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{5.2cm}
+                >{\raggedleft\arraybackslash}p{3.4cm}
+                >{\raggedleft\arraybackslash}p{3.6cm}}
+\toprule
+\textbf{Autorenschaft} & \textbf{Team AI (n=15)} & \textbf{Reflexionsbot (n=16)} \\
+\midrule
+studentisch  & 3 & 8 \\
+unklar       & 4 & 1 \\
+KI-generiert & 8 & 7 \\
+\midrule
+nicht eindeutig studentisch & 12 (80\,\%) & 8 (50\,\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Reflexionsstufen der studentisch verfassten Bearbeitungen}
+Für die Fälle mit eindeutig studentischer Autorenschaft verteilen sich die Reflexionsstufen wie in
+Abbildung~\ref{fig:ergebnisse-stufen} dargestellt. Deskriptiv liegt der Mittelwert der Stufen bei Team
+AI mit 1.33 (n=3) über dem des Reflexionsbots mit 0.75 (n=8); die Mediane liegen bei 2.0 gegenüber 0.5.
+Bei drei gegenüber acht auswertbaren Fällen ist dieser Unterschied jedoch nicht belastbar. Bereits ein
+einzelner abweichender Fall verschiebt den Mittelwert der kleineren Gruppe um mehr als 0,3 Stufen.
+
+Kein einziger Fall der gesamten Stichprobe erreicht mit bestätigter studentischer Autorenschaft
+Stufe 4. Texte, die zunächst wie kritische Reflexion wirkten, stellten sich beim Abgleich mit den
+Rohdaten durchgehend als KI-generiert oder unklar heraus
+(vgl. Abschnitt~\ref{sec:illustration-kategoriensystem}). Kritische Reflexion im Sinne von Hatton und
+Smith ist allerdings auch unabhängig vom eingesetzten Werkzeug ein seltenes Phänomen, insbesondere bei
+Studierenden im ersten Semester und in einer einmaligen Übungseinheit. Das vollständige Ausbleiben
+dieser Stufe ist daher für sich genommen kein Befund über die verglichenen KI-Systeme.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+	ybar,
+	bar width=16pt,
+	width=0.85\textwidth,
+	height=5.4cm,
+	symbolic x coords={Stufe 0, Stufe 1, Stufe 2, Stufe 3, Stufe 4},
+	xtick=data,
+	xlabel={Reflexionsstufe nach Hatton und Smith},
+	ylabel={Anzahl Fälle},
+	xlabel style={font=\small},
+	ylabel style={font=\small},
+	x tick label style={font=\small},
+	y tick label style={font=\small},
+	ymin=0, ymax=5,
+	enlarge x limits=0.15,
+	legend style={at={(0.5,-0.30)}, anchor=north, legend columns=2, font=\small, draw=none,
+	              /tikz/every even column/.append style={column sep=0.6cm}},
+	nodes near coords,
+	nodes near coords style={font=\scriptsize},
+	axis lines*=left,
+	ytick={0,1,2,3,4,5},
+]
+\addplot[fill=codeblue!70, draw=codeblue] coordinates {(Stufe 0,4) (Stufe 1,3) (Stufe 2,0) (Stufe 3,1) (Stufe 4,0)};
+\addplot[fill=codegreen!60, draw=codegreen] coordinates {(Stufe 0,1) (Stufe 1,0) (Stufe 2,2) (Stufe 3,0) (Stufe 4,0)};
+\legend{Reflexionsbot (n=8), Team AI (n=3)}
+\end{axis}
+\end{tikzpicture}
+\caption{Verteilung der Reflexionsstufen nach Gruppe (nur Fälle mit eindeutig studentischer
+Autorenschaft)}
+\label{fig:ergebnisse-stufen}
+\end{figure}
+
+\subsection*{Objektiver Wissenstest}
+Im Wissenstest zu Scrum und Prozessmodellen (0 bis 6 Punkte) zeigt der Vergleich nach Systemgruppen
+keinen Vorteil des Reflexionsbots. Die Reflexionsbot-Gruppe fällt von Prä M=5.56 auf Post M=4.44
+(n=9), während die Generic-AI-Gruppe mit Prä und Post M=5.43 (n=7) stabil bleibt
+(Tab.~\ref{tab:survey-wissenstest}). Etwa die Hälfte dieses Rückgangs entfällt auf einen einzelnen
+Fall, der im Post-Survey alle sechs Fragen falsch beantwortete. Ohne diesen Fall liegt die
+Reflexionsbot-Gruppe bei Prä M=5.62 und Post M=5.00 (n=8); ein leichter Rückgang bleibt damit auch
+ohne ihn bestehen.
+
+Die Aussagekraft dieses Vergleichs ist allerdings durch einen Deckeneffekt begrenzt. Beide Gruppen
+liegen bereits im Prä-Test nahe der Höchstpunktzahl von rund 5,5 von 6 Punkten, sodass sich
+Lernzuwächse kaum abbilden lassen. Aus dem Test ist damit weder ein Systemvorteil noch dessen Fehlen
+belastbar abzuleiten. Dieser Vorbehalt gilt für jeden Vergleich, der auf diesem Instrument aufbaut,
+also auch für die im Folgenden berichtete Aufteilung nach dem Bearbeitungsverhalten.
+
+Teilt man dieselben Personen nach dem tatsächlichen Bearbeitungsverhalten auf, erreichen eigenständig
+arbeitende Personen im Post-Test M=5.75 (n=4) gegenüber M=4.50 (n=10) bei Personen mit ganz oder
+teilweise ausgelagerter Bearbeitung (vgl. Abschnitt~\ref{sec:selbstauskunft-verhalten}). Dieser
+Abstand ist jedoch nicht als Lerneffekt zu lesen. Alle vier eigenständig arbeitenden Personen
+erreichten bereits im Prä-Test die volle Punktzahl (Prä M=6.00, SD=0.00), sodass bei ihnen rechnerisch
+kein Zuwachs mehr möglich war; ihr Post-Wert entspricht einem leichten Rückgang von $-$0.25. Die
+Vergleichsgruppe startete bereits im Prä-Test unterhalb der Höchstpunktzahl und fiel ebenfalls ab. Der
+Unterschied im Post-Test spiegelt damit überwiegend eine schon vor der Übung bestehende
+Leistungsdifferenz wider und nicht einen unterschiedlichen Lernzuwachs.
+
+\subsection*{Selbsteingeschätztes Prozessverständnis und Systembewertung}
+Bei den Items zum reinen Beschreiben sinkt die Selbsteinschätzung in beiden Gruppen leicht. Bei den
+Items zum Begründen und Abwägen bleibt die Reflexionsbot-Gruppe stabil oder verbessert sich leicht,
+mit einer Veränderung von Post minus Prä zwischen 0.00 und $+$0.33. In der Generic-AI-Gruppe sinkt
+sie dagegen durchgehend, mit Werten zwischen $-$0.43 und $-$0.86
+(Tab.~\ref{tab:survey-prozessverstaendnis}). Beim selbstberichteten Reflexionsverhalten sinkt die
+Selbsteinschätzung nach der Übung in beiden Gruppen
+(Tab.~\ref{tab:survey-reflexionsverhalten}).
+
+Vier Post-Survey-Items bilden die Grundlage für die Beantwortung von TF3 in
+Abschnitt~\ref{sec:beantwortung-forschungsfragen} und sind in
+Abbildung~\ref{fig:survey-vergleich} gegenübergestellt. Beim Item zur Kompetenzentwicklung
+(\glqq Die Arbeit an den Dilemma-Situationen hat meine Fähigkeit verbessert, Prozessentscheidungen zu
+begründen\grqq{}) liegt die Reflexionsbot-Gruppe mit M=3.10 leicht über der Generic-AI-Gruppe mit
+M=2.80. Deutlicher fällt der Unterschied beim Item \glqq war hilfreicher als erwartet\grqq{} aus
+(M=3.40 gegenüber M=2.20). Umgekehrt ist die Bereitschaft zur erneuten Nutzung beim Reflexionsbot
+niedriger (M=2.50 gegenüber M=3.20), und Reflexionsbot-Nutzende hätten häufiger das jeweils andere
+System bevorzugt (M=3.30 gegenüber M=2.20).
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+	ybar,
+	bar width=14pt,
+	width=0.68\textwidth,
+	height=5.7cm,
+	symbolic x coords={Kompetenzentwicklung, Hilfreicher als erwartet, Erneute Nutzung, Anderes System bevorzugt},
+	xtick=data,
+	% Ungedrehte, zweizeilig gesetzte Beschriftungen: gedreht ueberlappten sie
+	% sich bei dieser Achsenbreite.
+	xticklabels={{Kompetenz-\\entwicklung}, {Hilfreicher\\als erwartet},
+	             {Erneute\\Nutzung}, {Anderes System\\bevorzugt}},
+	xticklabel style={font=\small, align=center},
+	ylabel={Zustimmung (1--5)},
+	ylabel style={font=\small},
+	y tick label style={font=\small},
+	ymin=0,
+	ymax=5,
+	enlarge x limits=0.15,
+	% Legende rechts neben dem Diagramm statt darunter: spart Bauhoehe und
+	% haelt die Beschriftung vom gedrehten x-Achsen-Text getrennt.
+	legend style={at={(1.03,1)}, anchor=north west, legend columns=1, font=\small,
+	              draw=none, cells={anchor=west}},
+	nodes near coords,
+	nodes near coords style={font=\scriptsize},
+	axis lines*=left,
+	ytick={0,1,2,3,4,5},
+]
+\addplot[fill=codeblue!70, draw=codeblue] coordinates {
+	(Kompetenzentwicklung,3.10) (Hilfreicher als erwartet,3.40) (Erneute Nutzung,2.50) (Anderes System bevorzugt,3.30)
+};
+\addplot[fill=codegreen!60, draw=codegreen] coordinates {
+	(Kompetenzentwicklung,2.80) (Hilfreicher als erwartet,2.20) (Erneute Nutzung,3.20) (Anderes System bevorzugt,2.20)
+};
+\legend{Reflexionsbot, Generisches System}
+\end{axis}
+\end{tikzpicture}
+\caption[Vergleich zentraler Survey-Mittelwerte]{Vergleich zentraler Survey-Mittelwerte zwischen
+Reflexionsbot- und Generic-AI-Gruppe (jeweils n=10)}
+\label{fig:survey-vergleich}
+\end{figure}
+
+\subsection*{Kognitive Last}
+Die Skala zur kognitiven Last (1 = very easy bis 5 = very difficult) ergibt kein einheitliches Bild
+(Tab.~\ref{tab:survey-kognitive-last}). Bei den drei Teilaufgaben und bei den beiden Items zum Umgang
+mit dem KI-System liegt die Reflexionsbot-Gruppe zwischen 0.00 und 0.40 Skalenpunkten höher, am
+deutlichsten beim Bewerten der Gegenargumente des Systems (M=3.10 gegenüber M=2.80). Die
+zusammenfassende Einschätzung des gesamten kognitiven Aufwands fällt dagegen \emph{gegenläufig} aus.
+Hier liegt die Generic-AI-Gruppe mit M=3.20 über der Reflexionsbot-Gruppe mit M=3.00. Angesichts von
+Standardabweichungen zwischen 1.00 und 1.66 bei zehn Personen je Gruppe sind sämtliche dieser
+Unterschiede kleiner als die Streuung innerhalb der Gruppen. Aus dieser Skala lässt sich daher weder
+ableiten, dass der Reflexionsbot als anstrengender empfunden wurde, noch das Gegenteil.
+
+\section{Illustration des Kategoriensystems an realen Entscheidungssituationen}
+\label{sec:illustration-kategoriensystem}
+
+Um zu verdeutlichen, wie die Reflexionsstufen nach Hatton und Smith
+\cite{hattonSmithReflectionTeacherEducation1995} auf das vorliegende Material angewendet wurden, wird
+im Folgenden je ein reales Beispiel pro Stufe herangezogen. Alle Beispiele stammen von Personen, deren
+Autorenschaft nach Abgleich mit den Rohdaten (Chatlogs, Zusatzdokumente, Formulierungsvergleiche
+zwischen Personen) als eindeutig studentisch eingestuft wurde. Sie stammen bewusst nicht alle aus
+derselben Entscheidungssituation, da die genauere Prüfung der Rohdaten mehrere ursprünglich als
+studentisch angenommene Texte als KI-generiert entlarvt hat (vgl. Abschnitt~\ref{sec:datenanalyse}).
+
+\textbf{Stufe 0, keine eigene Reflexion:} Ein Teilnehmer im Team Reflexionsbot antwortet auf wiederholte
+Rückfragen nur mit: \glqq Stop asking questions!!!\grqq{} und liefert zu keinem Zeitpunkt eine eigene
+inhaltliche Antwort.
+
+\textbf{Stufe 1, deskriptives Schreiben (Descriptive Writing):} Eine Teilnehmerin im Team Reflexionsbot begründet ihre Priorisierung
+auf mehrfache Rückfrage des Bots hin nur mit: \glqq Health > trustworthiness\grqq{}. Die Aussage bleibt
+eine bloße Rangfolge ohne inhaltliche Auseinandersetzung mit dem Gegenargument des Systems.
+
+\textbf{Stufe 2, deskriptive Reflexion (Descriptive Reflection):} Eine Teilnehmerin bei Team AI begründet ihre Wahl von
+Datensatz A in Situation B des Szenarios SmartDose so: \glqq A gives better reliability but might run
+into problems when it is later on revealed the data cannot be used and the ai has to be
+retrained\grqq{}. Hier wird ein Kriterium (Zuverlässigkeit) benannt und einem konkreten Risiko
+gegenübergestellt, jedoch ohne die nicht gewählte Option weiter zu erwägen.
+
+\textbf{Stufe 3, dialogische Reflexion (Dialogic Reflection):} Ein Teilnehmer im Team Reflexionsbot wägt in Situation C des
+Szenarios LearnLoop einen Nachteil explizit gegen einen Vorteil ab: \glqq While there is a risk of
+context switching, this approach minimizes idle time and maintains momentum.\grqq{} Der Nachteil wird
+benannt und bewusst gegen den Nutzen der eigenen Entscheidung abgewogen.
+
+\textbf{Stufe 4, kritische Reflexion (Critical Reflection):} Für diese Stufe konnte in der gesamten Stichprobe kein Fall mit
+bestätigter studentischer Autorenschaft gefunden werden. Mehrere Texte erfüllten die formalen
+Kriterien der Stufe augenscheinlich sehr gut, etwa eine vollständige Abwägung von Datenschutz,
+Zulassungsfähigkeit und Modellqualität unter ausdrücklichem Verweis auf GDPR und MDR. Beim Abgleich
+mit den zugehörigen Chatlogs und Zusatzdokumenten stellten sich jedoch ausnahmslos alle diese Texte
+als KI-generiert heraus, unter anderem, weil zwei unterschiedliche Personen fast wortgleiche
+Formulierungen einreichten oder weil ein Link zum zugrunde liegenden ChatGPT-Verlauf mitgeliefert
+wurde. Diese Beobachtung wird in Abschnitt~\ref{sec:beantwortung-forschungsfragen} als eigenständiger
+Befund aufgegriffen: sprachlich und strukturell überzeugende Antworten waren in dieser Stichprobe ein
+stärkeres Indiz für KI-Autorenschaft als für tiefe eigene Reflexion.
+
+Das Beispiel zeigt, dass Reflexionstiefe in den vorliegenden Daten nicht in erster Linie vom
+verwendeten KI-System abhing, sondern davon, ob eine Person sich überhaupt eigenständig mit der
+Entscheidung auseinandersetzte, statt die Aufgabe zu vermeiden oder an die KI zu delegieren. Dass diese Bearbeitungshaltung eher
+personengebunden als szenarienabhängig ist, zeigt sich daran, dass die Autorenschaft bei 10 der 11
+Personen mit zwei Bearbeitungen über beide Szenarien identisch ausfällt. Nur in einem Fall wechselt
+sie von \glqq studentisch\grqq{} zu \glqq unklar\grqq{} (vgl. \hyperref[app:kodierungstabelle]{Anhang~A.2}). Die
+vollständige Kodierung aller Fälle sowie die Häufigkeitsverteilung je Gruppe sind im Anhang
+dokumentiert.
+
+\section{Selbstauskunft und dokumentiertes Bearbeitungsverhalten}
+\label{sec:selbstauskunft-verhalten}
+
+Der Abgleich der Autorenschafts-Einstufung aus Abschnitt~\ref{sec:datenanalyse} mit den
+Post-Survey-Antworten derselben Personen (verknüpft über den persönlichen Code, vgl.
+Abschnitt~\ref{sec:fragebogen-experiment}) zeigt eine weitere Facette des zentralen Befunds dieser
+Arbeit. Von 14 Personen, für die sowohl eine Autorenschafts-Einstufung als auch Survey-Daten vorliegen,
+bearbeiteten vier ihre Szenarien durchgehend eigenständig. Bei den übrigen zehn war mindestens eine
+Bearbeitung ganz oder teilweise an die KI ausgelagert.
+
+Im Wissenstest zu Scrum und Prozessmodellen schnitt die eigenständig arbeitende Gruppe deutlich besser
+ab (Mittelwert 5.75 von 6 Punkten) als die Gruppe mit ausgelagerter Bearbeitung (Mittelwert 4.50 von 6
+Punkten). Bei der Selbsteinschätzung des eigenen Reflexionsverhaltens im Survey zeigte sich dagegen
+kein vergleichbarer Unterschied zwischen beiden Gruppen.
+
+Besonders deutlich wird das Missverhältnis bei der wahrgenommenen Nützlichkeit des jeweiligen
+Systems: Eine Person, die in der qualitativen Kodierung selbst angab, die Aufgaben nur kopiert und das
+System nie aktiv genutzt zu haben, bewertete es im Survey trotzdem als sehr nützlich für die eigene
+Reflexion. Umgekehrt bewerteten mehrere Personen mit eindeutig eigenständiger, aber wenig reflektierter
+Bearbeitung dasselbe System als wenig hilfreich. Selbstauskunft im Fragebogen allein hätte den
+Unterschied zwischen echter Auseinandersetzung und vollständiger Auslagerung an die KI in diesen
+Fällen nicht sichtbar gemacht. Erst der Abgleich mit den Rohdaten der Bearbeitung deckte ihn auf. Diese
+kleine Stichprobe (n=4 gegenüber n=10) erlaubt keine statistische Verallgemeinerung, liefert aber ein
+inhaltliches Argument dafür, Selbstauskunft und dokumentiertes Verhalten in zukünftigen Studien zu
+diesem Thema grundsätzlich getrennt zu erheben und gegeneinander zu prüfen.

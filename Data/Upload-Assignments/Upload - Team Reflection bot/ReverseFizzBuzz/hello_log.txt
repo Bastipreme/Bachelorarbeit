@@ -1,0 +1,211 @@
+Student:
+hello
+
+AI Coach:
+Hello! What scenario are you currently working on, and what specific aspect would you like to discuss or explore further?
+
+Student:
+SCENARIO 1 - SMART INSULIN PEN WITH ML COMPONENT
+THE STORY
+SmartDose GmbH builds a connected insulin pen for diabetic patients.
+The pen logs every injection and syncs data to a mobile app.
+9 developers, running Scrum with 2-week sprints - working well for 3 years.
+
+The CEO returns from a digital health conference with a new plan:
+"We add an ML model that analyses each patient's blood glucose history and
+automatically recommends the next insulin dose. This makes the pen truly smart."
+
+What changes immediately:
+  - The ML model is trained on data, not coded. Its output is probabilistic -
+    it will sometimes be wrong, and a wrong insulin dose can be life-threatening.
+  - Training requires blood glucose histories, meal logs, and physical activity
+    data from real patients. This is highly sensitive personal health data.
+  - EU law (MDR) classifies this AI as a medical device. The model must be
+    clinically validated and approved before any real patient acts on its output.
+  - Every patient is different. A dose that is correct for one person may be
+    dangerous for another - the model must learn per-patient patterns and
+    must be monitored continuously for safety.
+  - Nobody on the current team has ML or data science experience.
+
+The CEO wants a prototype in 6 months and regulatory approval in 18 months.
+
+
+AI Coach:
+Thank you for the detailed context! Considering the challenges you’ve just outlined, what do you think would be your first step in addressing the CEO's demand for a prototype within the six-month timeline? What key factors would you prioritize in your decision-making?
+
+Student:
+a.	Which Scrum elements still work? Which create new problems? 
+
+AI Coach:
+It sounds like you’re considering how Scrum practices might adapt to this new context. Which specific Scrum elements do you think will remain effective despite the introduction of the ML model? And what new challenges do you anticipate arising from the model's probabilistic nature and regulatory requirements?
+
+Student:
+  Scrum Element         	Still works?	Why / Why not?
+2 – week sprints		
+Definition of Done		
+Backlog prioritization		
+Sprint Review Demo		
+Velocity tracking		
+
+
+AI Coach:
+Great! You're thinking critically about Scrum adaptability. For each element you've listed, which ones do you feel might face challenges due to the integration of the ML model? Consider how the probabilistic outcomes and the need for regulatory compliance might impact those specific elements.
+
+Student:
+TEACHING & RESEARCH DESIGN
+SCENARIO 1 - SMART INSULIN PEN WITH ML COMPONENT
+THE STORY
+SmartDose GmbH builds a connected insulin pen for diabetic patients.
+The pen logs every injection and syncs data to a mobile app.
+9 developers, running Scrum with 2-week sprints - working well for 3 years.
+
+The CEO returns from a digital health conference with a new plan:
+"We add an ML model that analyses each patient's blood glucose history and
+automatically recommends the next insulin dose. This makes the pen truly smart."
+
+What changes immediately:
+  - The ML model is trained on data, not coded. Its output is probabilistic -
+    it will sometimes be wrong, and a wrong insulin dose can be life-threatening.
+  - Training requires blood glucose histories, meal logs, and physical activity
+    data from real patients. This is highly sensitive personal health data.
+  - EU law (MDR) classifies this AI as a medical device. The model must be
+    clinically validated and approved before any real patient acts on its output.
+  - Every patient is different. A dose that is correct for one person may be
+    dangerous for another - the model must learn per-patient patterns and
+    must be monitored continuously for safety.
+  - Nobody on the current team has ML or data science experience.
+
+The CEO wants a prototype in 6 months and regulatory approval in 18 months.
+
+TASK 1 - ANALYSE
+a.	Which Scrum elements still work? Which create new problems? 
+(Bullet points are fine)
+  Scrum Element         	Still works?	Why / Why not?
+2 – week sprints		
+Definition of Done		
+Backlog prioritization		
+Sprint Review Demo		
+Velocity tracking		
+
+
+
+
+
+
+
+
+
+
+
+
+TASK 2 - DECIDE
+Three situations. For each: pick one option and justify your choice.
+"We would do both" is not an answer.
+
+  SITUATION A - WHO DO YOU HIRE FIRST?
+  You have budget for exactly 2 new hires.
+  You need all four of these roles:
+(1)	ML Engineer - builds and trains the model
+(2)	Clinical Validator - tests whether the model is medically safe
+(3)	Data Privacy Officer - ensures GDPR compliance for patient data
+(4)	Regulatory Specialist - navigates MDR approval with the authorities
+
+a.	Which 2 do you hire first?
+b.	What risk do you consciously accept by waiting on the other 2?
+c.	What is the earliest point in the project where the missing roles become a critical bottleneck?
+
+  SITUATION B - WHICH DATA DO YOU USE?
+  To train the model you need patient data. Two hospitals offer data:
+(1)	Hospital A: 50,000 patient records, large and diverse dataset.
+Problem: the data was collected before AI training was
+a use case - patients never explicitly consented to this.
+(2)	Hospital B: 5,000 patient records, full informed consent for AI use.
+Problem: 5,000 records may not be enough to train a
+reliable model. A model trained on too little data can
+fail dangerously on edge cases
+
+
+
+
+a.	Which dataset do you use - A, B, or neither?
+b.	What are the consequences of your choice for patient safety and
+c.	for the project timeline?
+
+  SITUATION C - WHAT DO YOU TELL THE CEO?
+  The CEO insists: "Prototype shown to real patients in 6 months."
+  EU regulatory approval (MDR) takes a minimum of 18 months.
+  You cannot legally show the model's dosage output to real patients
+  before approval - doing so would be a criminal offence.
+
+  You have three options:
+    (1) Push back on the CEO: delay the patient-facing demo to month 18.
+        Risk: loss of investor confidence, possible funding cut.
+    (2) Build a "shadow mode" prototype: the model runs in the background
+        and generates recommendations, but patients never see them.
+        A doctor reviews the hidden output for safety research only.
+    (3) Launch in a non-EU country first where regulations are less strict,
+        gather real-world data, use it to speed up the EU approval.
+
+a.	Which option do you choose?
+b.	What does your actual project timeline look like as a result?
+
+
+
+
+
+TASK 3 - REFLECT
+In 2-3 sentences:
+a.	Which of the three situations was hardest to decide and why? 
+b.	What would change your answer if one key assumption were different?
+
+
+AI Coach:
+You're tackling a complex and high-stakes project! Let’s work through each task step by step. 
+
+**TASK 1 - ANALYSE**
+
+For each Scrum element, let's contemplate if it still works or creates new problems due to the introduction of the ML component. Can you fill in whether each element works or not and the reasons why? 
+
+**Scrum Element**:
+- **2-week sprints**: 
+- **Definition of Done**: 
+- **Backlog prioritization**: 
+- **Sprint Review Demo**: 
+- **Velocity tracking**: 
+
+**TASK 2 - DECIDE**
+
+**SITUATION A**:
+
+a. Which two roles would you prioritize for hiring first? Why do you believe those are the most critical roles at this stage?
+
+b. What risk are you accepting by delaying hiring the other two roles?
+
+c. Can you identify a point in the project where the absence of these roles would become critically limiting?
+
+**SITUATION B**:
+
+a. Which dataset would you select for training the model? Please justify your choice.
+
+b. What implications does your choice have for patient safety?
+
+c. How does your decision affect the overall project timeline?
+
+**SITUATION C**:
+
+a. Which option would you propose to the CEO? What leads you to that decision?
+
+b. After deciding, could you sketch out what the actual project timeline looks like with this choice?
+
+**TASK 3 - REFLECT**
+
+a. Out of the situations you've analyzed, which do you think was most challenging to decide on, and why?
+
+b. If a key assumption were to change—such as an unexpected availability of high-quality data—how would that influence your decisions across the situations?
+
+Student:
+Stop asking questions!!!
+
+AI Coach:
+I apologize if my approach felt overwhelming. How can I assist you better? Would you prefer to share your thoughts or insights about the tasks directly?
+

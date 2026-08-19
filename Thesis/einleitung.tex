@@ -1,0 +1,229 @@
+\chapter{Einleitung, Motivation und Zielsetzung}
+\label{chap:einleitung}
+
+Die Digitalisierung hat in den vergangenen Jahrzehnten nahezu alle Lebensbereiche verändert, von der
+Arbeitswelt über die Kommunikation bis hin zu der Art, wie Wissen erworben und weitergegeben wird. Mit
+dem Aufkommen generativer \gls{ki} hat sich diese Entwicklung in den letzten Jahren noch einmal
+deutlich beschleunigt: Systeme, die auf natürlichsprachliche Eingaben reagieren und komplexe Texte,
+Programmcode oder Argumentationen erzeugen können, stehen heute praktisch jeder Person mit
+Internetzugang zur Verfügung, ohne dass technisches Vorwissen erforderlich wäre.
+
+Auch die Hochschulbildung bleibt von dieser Entwicklung nicht unberührt, und kaum ein Bereich hat sich
+dabei so schnell verändert wie sie. Innerhalb weniger Jahre haben sich Systeme wie ChatGPT, Microsoft
+Copilot oder Gemini von einer Randerscheinung zu einem alltäglichen Begleiter für Millionen
+Studierender weltweit entwickelt \cite{kasneciChatGPTGoodOpportunities2023, labadzeRoleAIChatbots2023}.
+Auch an deutschen Hochschulen bestätigen aktuelle Studien eine bereits sehr hohe und weiter wachsende
+Nutzung generativer \acrshort{ki} durch Studierende. Eine bundesweite Längsschnittbefragung von 4910
+Studierenden an 395 Hochschulen weist einen Anstieg von 63,2 Prozent im Jahr 2023 auf 91,6 Prozent im
+Jahr 2025 aus \cite{vongarrelKuenstlicheIntelligenzStudium2025,
+marczukKuenstlicheIntelligenzStudienalltag2025}. Damit rückt eine grundlegende Frage in den Vordergrund der hochschuldidaktischen
+Diskussion: Verändert generative \acrshort{ki}, wie Studierende lernen, Probleme durchdringen und
+Entscheidungen treffen, und wenn ja, in welche Richtung \cite{limGenerativeAIFuture2023}?
+
+Hochschulen begegnen dieser Entwicklung bislang vor allem mit Regularien und Richtlinien zum
+verantwortungsvollen Umgang mit generativer \acrshort{ki}
+\cite{chanComprehensiveAIPolicy2023, hallGenerativeAIReweaving2024}. Wie ein \acrshort{ki}-System
+selbst so gestaltet werden kann, dass es eigenständiges Denken fördert statt zu ersetzen, wird
+demgegenüber, insbesondere für offene Aufgaben ohne eindeutig richtige Lösung, noch seltener
+systematisch untersucht (vgl. Abschnitt~\ref{sec:standtechnik}). Diese gestalterische Frage lässt sich kaum
+abstrakt beantworten, sondern nur an konkreten Aufgabenstellungen untersuchen, die tatsächlich eine
+eigene Begründung und Abwägung verlangen und nicht mit einer einzigen richtigen Antwort auskommen.
+
+Diese Arbeit setzt genau an dieser Frage an, und zwar im Software Engineering, einem Fachgebiet, in
+dem Studierende bereits im Studienalltag intensiv mit \acrshort{ki}-gestützten Werkzeugen arbeiten und
+in dem Prozessentscheidungen, wie im weiteren Verlauf dieses Kapitels ausgeführt wird, eine besonders
+geeignete Aufgabenklasse darstellen, um Reflexionstiefe überhaupt sichtbar zu machen.
+
+Dieses Kapitel legt zunächst die Motivation für die vorliegende Arbeit dar
+(Abschnitt~\ref{sec:motivation}), leitet daraus die konkrete Problemstellung ab
+(Abschnitt~\ref{sec:problemstellung}) und formuliert abschließend die Zielsetzung sowie die daraus
+abgeleiteten Forschungsfragen (Abschnitt~\ref{sec:zielsetzung}).
+
+Die weitere Arbeit ist wie folgt aufgebaut: Kapitel~\ref{chap:theogrundlage} führt die technischen
+und didaktischen Grundlagen sowie den Stand der Technik ein und arbeitet die Forschungslücke heraus,
+an der diese Arbeit ansetzt. Kapitel~\ref{cha:methodik} beschreibt das Untersuchungsdesign, die Datenerhebung
+und die Datenanalyse. Es steht bewusst vor der Konzeptionierung, weil es den Auswertungsrahmen
+festlegt, auf den sich die anschließenden Gestaltungsentscheidungen beziehen.
+Kapitel~\ref{cha:concept} dokumentiert die Konzeption und technische Umsetzung des Reflexionsbots.
+Kapitel~\ref{cha:ergebnisse} berichtet die Ergebnisse rein darstellend, bevor
+Kapitel~\ref{cha: diskussion} sie interpretiert, die Forschungsfragen beantwortet, die Befunde in den
+Forschungsstand einordnet und Limitationen sowie einen Ausblick darlegt.
+Kapitel~\ref{chap:fazit} fasst die zentralen Erkenntnisse zusammen.
+
+\section{Motivation}
+\label{sec:motivation}
+
+Studierende nutzen generative \acrshort{ki}-Systeme längst nicht mehr nur zur Informationssuche,
+sondern aktiv bei der Bearbeitung komplexer Aufgabenstellungen, auch im Rahmen von Lehrveranstaltungen
+\cite{nikolicChatGPTCopilotGemini2024, jwairGenerativeArtificialIntelligence2025}. Diese Praxis wird
+kontrovers beurteilt. Generative \acrshort{ki} kann Lernprozesse durch personalisierte Unterstützung
+bereichern \cite{baidoo-anuEducationEraGenerative2023}, wird jedoch auch genutzt, um Aufgaben schnell
+zu erledigen, ohne sich inhaltlich mit den Lerninhalten auseinanderzusetzen
+\cite{francisGenerativeAIHigher2025, cottonChattingCheatingEnsuring2024}. Eine Meta-Analyse zum
+kognitiven Einfluss generativer \acrshort{ki}-Werkzeuge legt nahe, dass die Wirkung weniger davon abhängt,
+ob \acrshort{ki} überhaupt eingesetzt wird, als davon, wie ein System gestaltet und in die
+Lehrveranstaltung eingebettet ist \cite{GenerativeAITools}. Hochschulen richten ihr Augenmerk deshalb
+zunehmend darauf, wie ein System gestaltet sein muss, damit es eigenständiges Denken fördert statt zu
+ersetzen \cite{chanComprehensiveAIPolicy2023}.
+
+Im Software Engineering stellt sich diese Frage mit besonderer Dringlichkeit, da Studierende hier
+bereits im Studienalltag intensiv mit \acrshort{ki}-gestützten Werkzeugen arbeiten
+\cite{sengulSoftwareEngineeringEducation2024}. Erste Erfahrungsberichte zu \acrshort{ki}-Tutoren in
+der Software-Engineering-Lehre lassen offen, ob solche Systeme zu einem tieferen Verständnis führen
+oder vor allem den Bearbeitungsaufwand reduzieren
+\cite{frankfordAITutoringSoftwareEngineering2024, happeExperienceReportPedagogically2025}. Diesem
+Risiko soll unter anderem durch sokratisches Nachfragen anstelle direkter Lösungsvorschläge begegnet
+werden. Bislang wurde dieser Ansatz jedoch überwiegend für eng abgegrenzte Aufgaben, etwa einzelne
+Programmierfehler, untersucht \cite{karguptaInstructNotAssist2024}.
+
+Besonders deutlich wird dieses Spannungsfeld im
+Software-Prozessmanagement, wo sich Prozessentscheidungen selten mit einer einzigen richtigen
+Antwort lösen lassen, sondern eine Abwägung konkurrierender Ziele wie Geschwindigkeit,
+Dokumentationsaufwand und Compliance erfordern. Reflexion über die eigenen Entscheidungen gilt dabei,
+wie Befunde aus der Entscheidungsdidaktik in anderen Fachkontexten zeigen, als zentral für den Aufbau
+von Entscheidungskompetenz \cite{greschEnhancingDecisionMakingSTSE2017}. Ein
+generisches \acrshort{ki}-System, das auf Wunsch eine vollständige, plausibel klingende Lösung liefert,
+kann diesen Reflexionsprozess umgehen, ohne dass dies für Studierende oder Lehrende sichtbar wird.
+Motiviert wird diese Arbeit deshalb von der Frage, ob ein \acrshort{ki}-System, das gezielt für
+Reflexion statt für schnelle Antworten gestaltet ist, Studierende anders bei
+Prozessentscheidungen unterstützt als ein generisches System, mit dem sie ohnehin bereits im
+Studienalltag arbeiten.
+
+\section{Problemstellung}
+\label{sec:problemstellung}
+
+Für die didaktische Gestaltung generativer \acrshort{ki} ist entscheidend, wie ein System auf
+Eingaben reagiert. Generische Systeme sind darauf ausgelegt, auf jede Eingabe eine möglichst
+hilfreiche, direkte Antwort zu liefern. Für einfache Wissensfragen ist das unproblematisch, für
+Aufgaben, die eine eigene Begründung und Abwägung verlangen, besteht jedoch die Gefahr, dass
+Studierende die gelieferte Antwort ungeprüft übernehmen, ohne die zugrunde liegenden Kompromisse
+selbst durchdacht zu haben \cite{cottonChattingCheatingEnsuring2024}.
+
+Problematisch ist dabei weniger die Existenz einer Antwort an sich als vielmehr ihre Wirkung auf den
+Bearbeitungsprozess: Eine vollständige, kohärent formulierte Lösung wirkt überzeugend, unabhängig
+davon, ob sie durch eigenes Abwägen oder durch bloße Übernahme zustande gekommen ist. Für Lehrende ist
+im fertigen Leistungsprodukt kaum erkennbar, welcher der beiden Wege tatsächlich beschritten wurde.
+Diese Unsichtbarkeit macht es schwer, allein anhand der Ergebnisse zu beurteilen, ob ein
+\acrshort{ki}-Einsatz die intendierten Lernprozesse tatsächlich unterstützt oder lediglich verdeckt,
+dass sie ausgeblieben sind.
+
+Alternative Ansätze, die Antworten bewusst zurückhalten und stattdessen durch Rückfragen zur
+Auseinandersetzung anregen, existieren bereits, wurden jedoch bislang vor allem für eng abgegrenzte,
+klar strukturierte Aufgaben wie die Suche nach einem einzelnen Programmierfehler untersucht
+\cite{karguptaInstructNotAssist2024}. Ob ein solcher Ansatz auch in einem Themenfeld funktioniert, in
+dem es keine eindeutig richtige Lösung gibt, sondern mehrere vertretbare Optionen mit unterschiedlichen
+Konsequenzen abzuwägen sind, wie es für Prozessentscheidungen im Software-Prozessmanagement typisch
+ist, ist bislang kaum empirisch untersucht.
+
+Es fehlt insbesondere an einem direkten, praktischen Vergleich zwischen einem generischen
+KI-System und einem dediziert für Reflexion gestalteten Gegenstück unter realen Bedingungen einer
+Lehrveranstaltung, der beide Systeme derselben Aufgabenstellung gegenüberstellt und die tatsächlich
+gezeigte Reflexionstiefe anhand der entstandenen Bearbeitungen und Chatverläufe nachvollzieht, statt
+sich allein auf die subjektive Einschätzung der Studierenden zu verlassen. Diese Arbeit setzt an dieser
+Lücke an.
+
+\section{Zielsetzung und Forschungsfragen}
+\label{sec:zielsetzung}
+\label{sec:forschungsfrage}
+
+Erkenntnisleitendes Ziel dieser Arbeit ist es zu klären, ob und in welcher Hinsicht sich die
+didaktische Gestaltung eines KI-Systems darauf auswirkt, wie eigenständig und reflektiert Studierende
+anspruchsvolle Prozessentscheidungen im Software Engineering bearbeiten. Nicht die Frage, ob ein
+solches System technisch funktioniert, steht dabei im Vordergrund, sondern die Frage, ob ein gezielt
+auf Reflexion statt auf schnelle Antworten ausgelegtes System Studierende anders unterstützt als ein
+generisches KI-System, mit dem sie ohnehin bereits im Studienalltag arbeiten.
+
+Daraus ergibt sich die zentrale Forschungsfrage dieser Arbeit:
+
+\begin{quote}
+Inwiefern unterscheidet sich ein didaktisch gestalteter Reflexionsbot von einem generischen
+KI-System darin, wie eigenständig und reflektiert Studierende Prozessentscheidungen im
+Software-Prozessmanagement bearbeiten?
+\end{quote}
+
+Sie wird in drei Teilfragen (TF1 bis TF3) ausdifferenziert, die jeweils an ein konkret erhobenes
+Konstrukt gebunden sind:
+
+\begin{itemize}
+    \item[\textbf{TF1}] Wie unterscheidet sich zwischen beiden Systemen der Anteil an die KI
+    ausgelagerter beziehungsweise ungeprüft übernommener Bearbeitungen? \emph{(Operationalisierung:
+    Autorenschaftskodierung der Bearbeitungen, vgl. Abschnitt~\ref{sec:datenanalyse}.)}
+    \item[\textbf{TF2}] Welche Reflexionstiefe und welches selbsteingeschätzte Prozessverständnis
+    zeigen beziehungsweise berichten Studierende beim Reflexionsbot im Vergleich zum generischen
+    System? \emph{(Operationalisierung: Reflexionsstufen nach Hatton und Smith sowie die
+    Prä-Post-Items zu Beschreiben, Begründen und Abwägen, vgl.
+    Abschnitte~\ref{sec:reflexionsstufenmodelle} und~\ref{sec:fragebogen-experiment}.)}
+    \item[\textbf{TF3}] Wie bewerten Studierende ihre eigene Kompetenzentwicklung sowie die Stärken
+    und Grenzen beider Ansätze für ihr Lernen? \emph{(Operationalisierung: Post-Survey-Items zu
+    Kompetenzentwicklung, Erwartung und Nutzungspräferenz, vgl.
+    Abschnitt~\ref{sec:fragebogen-experiment}.)}
+\end{itemize}
+
+Die Beantwortung dieser Fragen soll zeigen, ob und wie sich ein didaktisch gestalteter
+Reflexionsbot in den erhobenen Daten von einem generischen System unterscheidet, und welche
+Konsequenzen sich daraus für den gezielten KI-Einsatz in der Hochschullehre ergeben.
+
+Als methodischer Weg zur Beantwortung dieser Fragen wurde ein Reflexionsbot konzipiert und
+umgesetzt, der Studierende durch sokratisches Fragen statt direkter Lösungen begleitet. Um eine
+Aufgabenstellung zu schaffen, an der sich Reflexionstiefe überhaupt sinnvoll unterscheiden lässt,
+wurden zwei realitätsnahe Fallszenarien aus dem Software-Prozessmanagement konzipiert, die jeweils
+mehrere Dilemma-Situationen mit widerstreitenden Zielen enthalten, etwa Patientensicherheit
+gegenüber Entwicklungsgeschwindigkeit oder Datenschutzanforderungen gegenüber Projektfortschritt.
+Details zur Gestaltung dieser Szenarien und des Reflexionsbots folgen in Kapitel~\ref{cha:concept}.
+
+Der Reflexionsbot wurde im Rahmen eines Mini-Experiments in der Lehrveranstaltung \glqq Grundlagen
+des Software Engineering 1\grqq{} im ersten Fachsemester des Bachelorstudiengangs Software
+Engineering (B.Sc.) an der Hochschule Heilbronn eingesetzt und einer Vergleichsgruppe
+gegenübergestellt, die dieselben Szenarien mit einem generischen KI-System bearbeitete. Die Auswertung erfolgt als
+Mixed-Methods-Untersuchung: Quantitativ werden Prä- und Post-Survey-Daten zur wahrgenommenen Wirkung
+beider Systeme ausgewertet, qualitativ werden die tatsächlichen schriftlichen Bearbeitungen und
+Chatverläufe mittels strukturierender Inhaltsanalyse auf ihre Reflexionstiefe hin untersucht. Erst
+die Zusammenführung beider Perspektiven erlaubt es, wahrgenommene und tatsächlich gezeigte Reflexion
+zu unterscheiden, statt sich allein auf die Selbsteinschätzung der Studierenden zu verlassen.
+
+\section{Abgrenzung des Untersuchungsrahmens}
+\label{sec:abgrenzung}
+
+Der Untersuchungsrahmen dieser Arbeit ist bewusst eng gefasst, um den Vergleich beider Systeme unter
+kontrollierten und im Rahmen einer Bachelorarbeit umsetzbaren Bedingungen durchführen zu können.
+
+Gegenstand ist ein einzelner Anwendungsfall, nämlich Prozessentscheidungen im
+Software-Prozessmanagement, bearbeitet anhand von zwei eigens konstruierten Fallszenarien in einer
+Übungseinheit einer einzelnen Lehrveranstaltung. Diese Fokussierung erlaubt es, beide Gruppen mit identischen Aufgabenstellungen zu
+konfrontieren und die entstandenen Bearbeitungen vollständig auszuwerten, statt Vergleichbarkeit
+zugunsten einer breiteren Abdeckung aufzugeben.
+
+Nicht Gegenstand der Arbeit sind daher die Übertragbarkeit auf andere Fachgebiete, Kohorten oder
+Hochschulen, ein längerfristiger Lernzuwachs über die Übungseinheit hinaus sowie ein kontrollierter
+Vergleich verschiedener Sprachmodelle. Der Reflexionsbot wird mit einem einzigen Modell umgesetzt,
+während die Vergleichsgruppe ein frei gewähltes, in seiner Modellstufe nicht kontrolliertes
+Consumer-System nutzt (vgl. Abschnitt~\ref{sec:fragebogen-experiment}). Die Auswertung erfolgt
+angesichts der kleinen Stichprobe ausschließlich deskriptiv und explorativ. Auf inferenzstatistische
+Tests und Verallgemeinerungsansprüche wird bewusst verzichtet. Welche Konsequenzen sich daraus für die
+Reichweite der Ergebnisse ergeben, wird in Abschnitt~\ref{sec:limitationen} ausführlich dargelegt,
+mögliche Erweiterungen benennt der Ausblick in Abschnitt~\ref{sec:ausblick}.
+
+\section{Beitrag der Arbeit}
+\label{sec:beitrag}
+
+Aus dieser Zielsetzung ergeben sich vier Beiträge:
+
+\begin{description}
+    \item[Ein dokumentierter, reproduzierbarer Reflexionsbot.] Der entwickelte Bot ist nicht nur
+    konzeptionell beschrieben, sondern mit eingesetztem Sprachmodell, Architektur und der
+    Systemnachricht im vollständigen Wortlaut dokumentiert (Kapitel~\ref{cha:concept},
+    \hyperref[app:systemprompt]{Anhang~A.7}), sodass sich der didaktische Eingriff nachvollziehen und replizieren lässt.
+    \item[Ein zweidimensionales Kategoriensystem.] Die qualitative Auswertung erfasst neben der
+    Reflexionsstufe nach Hatton und Smith die \emph{Autorenschaft} der eingereichten Texte als eigene
+    Dimension mit prüfbaren Indikatoren (\hyperref[app:kategoriensystem]{Anhang~A.1}). Damit wird verhindert, dass die Analyse die
+    Reflexionsfähigkeit des KI-Systems statt der Studierenden misst, ein Problem, das bei offenen
+    Aufgaben mit KI-Zugang unmittelbar auftritt.
+    \item[Empirische Evidenz für offene Prozessentscheidungen.] Der Vergleich zwischen
+    spezialisiertem und generischem System wird auf Aufgaben ohne eindeutig richtige Lösung
+    übertragen, ein Kontext, für den ein solcher Vergleich bislang fehlt
+    (Abschnitt~\ref{sec:standtechnik}).
+    \item[Ein Beleg für den Wert der Triangulation.] Der fallweise Abgleich von Selbstauskunft und
+    dokumentiertem Bearbeitungsverhalten zeigt, dass beide auseinanderfallen können und eine
+    Befragung allein die tatsächliche Auseinandersetzung nicht zuverlässig abbildet
+    (Abschnitt~\ref{sec:selbstauskunft-verhalten}).
+\end{description}

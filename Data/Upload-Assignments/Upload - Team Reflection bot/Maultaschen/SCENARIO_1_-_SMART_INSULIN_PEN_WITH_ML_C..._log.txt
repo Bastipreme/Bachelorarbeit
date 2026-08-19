@@ -1,0 +1,57 @@
+Student:
+SCENARIO 1 - SMART INSULIN PEN WITH ML COMPONENT
+
+THE STORY
+
+SmartDose GmbH builds a connected insulin pen for diabetic patients.
+
+The pen logs every injection and syncs data to a mobile app.
+
+9 developers, running Scrum with 2-week sprints - working well for 3 years.
+
+The CEO returns from a digital health conference with a new plan:
+
+"We add an ML model that analyses each patient's blood glucose history and
+
+automatically recommends the next insulin dose. This makes the pen truly smart."
+
+What changes immediately:
+
+- The ML model is trained on data, not coded. Its output is probabilistic -
+
+it will sometimes be wrong, and a wrong insulin dose can be life-threatening.
+
+- Training requires blood glucose histories, meal logs, and physical activity
+
+data from real patients. This is highly sensitive personal health data.
+
+- EU law (MDR) classifies this AI as a medical device. The model must be
+
+clinically validated and approved before any real patient acts on its output.
+
+- Every patient is different. A dose that is correct for one person may be
+
+dangerous for another - the model must learn per-patient patterns and
+
+must be monitored continuously for safety.
+
+- Nobody on the current team has ML or data science experience.
+
+The CEO wants a prototype in 6 months and regulatory approval in 18 months. 
+
+Can you help me here in asspects of how Definition of Done works?
+
+AI Coach:
+It sounds like you're grappling with how to ensure quality and regulatory compliance in your development process, especially given the critical implications of the ML model in your project. What specific aspects of the Definition of Done are you considering, particularly in relation to the unique requirements of a medical device?
+
+Student:
+Sure can you give me help to ask if it works in scrum. Role: Tutor for a Student
+
+AI Coach:
+Absolutely! When thinking about the Definition of Done in the context of your Scrum process, consider these questions: 
+
+1. How will you incorporate clinical validation into your Definition of Done to ensure the safety of patients? 
+2. Given that your team lacks ML experience, what criteria will you set to ensure that the ML model is functioning as intended before the sprint can be considered complete? 
+
+These questions should help you clarify how to integrate the needed standards in Scrum effectively.
+

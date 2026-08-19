@@ -1,0 +1,264 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.13)  19 AUG 2026 00:45
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**probe.tex
+(./probe.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-05-26>
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrreprt.cls
+Document Class: scrreprt 2026/02/02 v3.49.2 KOMA-Script document class (report)
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrkbase.sty
+Package: scrkbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-dependent
+ basics and keyval usage)
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrbase.sty
+Package: scrbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-independen
+t basics and keyval usage)
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrlfile.sty
+Package: scrlfile 2026/02/02 v3.49.2 KOMA-Script package (file load hooks)
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrlfile-hook
+.sty
+Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hook
+s)
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrlogo.sty
+Package: scrlogo 2026/02/02 v3.49.2 KOMA-Script package (logo)
+))) (d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+Applying: [2021/05/01] Usage of raw or classic option list on input line 254.
+Already applied: [0000/00/00] Usage of raw or classic option list on input line
+ 370.
+))
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/tocbasic.sty
+Package: tocbasic 2026/02/02 v3.49.2 KOMA-Script package (handling toc-files)
+\scr@dte@tocline@numberwidth=\skip49
+\scr@dte@tocline@numbox=\box53
+)
+Package tocbasic Info: omitting babel extension for `toc'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `toc' on input line 143.
+Package scrreprt Info: You've used standard option `12pt'.
+(scrreprt)             This is correct!
+(scrreprt)             Internally I'm using `fontsize=12pt'.
+(scrreprt)             If you'd like to set the option with \KOMAoptions,
+(scrreprt)             you'd have to use `fontsize=12pt' there
+(scrreprt)             instead of `12pt', too.
+Class scrreprt Info: File `scrsize12pt.clo' used to setup font sizes on input l
+ine 2710.
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/scrsize12pt.c
+lo
+File: scrsize12pt.clo 2026/02/02 v3.49.2 KOMA-Script font size class option (12
+pt)
+)
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/koma-script/typearea.sty
+Package: typearea 2026/02/02 v3.49.2 KOMA-Script package (type area)
+\ta@bcor=\skip50
+\ta@div=\count276
+Package typearea Info: You've used standard option `a4paper'.
+(typearea)             This is correct!
+(typearea)             Internally I'm using `paper=a4'.
+(typearea)             If you'd like to set the option with \KOMAoptions,
+(typearea)             you'd have to use `paper=a4' there
+(typearea)             instead of `a4paper', too.
+\ta@hblk=\skip51
+\ta@vblk=\skip52
+\ta@temp=\skip53
+\footheight=\skip54
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = 12
+(typearea)             BCOR = 0.0pt
+(typearea)             \paperwidth      = 597.50793pt
+(typearea)              \textwidth      = 448.13095pt
+(typearea)              DIV departure   = -6%
+(typearea)              \evensidemargin = 2.4185pt
+(typearea)              \oddsidemargin  = 2.4185pt
+(typearea)             \paperheight     = 845.04694pt
+(typearea)              \textheight     = 635.5pt
+(typearea)              \topmargin      = -41.72441pt
+(typearea)              \headheight     = 18.125pt
+(typearea)              \headsep        = 21.75pt
+(typearea)              \topskip        = 12.0pt
+(typearea)              \footskip       = 50.75pt
+(typearea)              \baselineskip   = 14.5pt
+(typearea)              on input line 1810.
+)
+\c@part=\count277
+\c@chapter=\count278
+\c@section=\count279
+\c@subsection=\count280
+\c@subsubsection=\count281
+\c@paragraph=\count282
+\c@subparagraph=\count283
+\scr@dte@chapter@maxnumwidth=\skip55
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\chapter on input line 5934.
+\scr@dte@section@maxnumwidth=\skip56
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\section on input line 5945.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\section on input line 5945.
+\scr@dte@part@maxnumwidth=\skip57
+Class scrreprt Info: using compatibility default `afterindent=true'
+(scrreprt)           for `\part on input line 5954.
+\scr@dte@subsection@maxnumwidth=\skip58
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\subsection on input line 5964.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\subsection on input line 5964.
+\scr@dte@subsubsection@maxnumwidth=\skip59
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\subsubsection on input line 5974.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\subsubsection on input line 5974.
+\scr@dte@paragraph@maxnumwidth=\skip60
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\paragraph on input line 5985.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\paragraph on input line 5985.
+\scr@dte@subparagraph@maxnumwidth=\skip61
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\subparagraph on input line 5995.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\subparagraph on input line 5995.
+\abovecaptionskip=\skip62
+\belowcaptionskip=\skip63
+\c@pti@nb@sid@b@x=\box54
+Package tocbasic Info: omitting babel extension for `lof'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lof' on input line 7225.
+\scr@dte@figure@maxnumwidth=\skip64
+\c@figure=\count284
+Package tocbasic Info: omitting babel extension for `lot'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lot' on input line 7238.
+\scr@dte@table@maxnumwidth=\skip65
+\c@table=\count285
+Class scrreprt Info: Redefining `\numberline' on input line 7409.
+\bibindent=\dimen150
+) (d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2026/03/07 v6.0 Page Geometry
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count286
+\Gm@cntv=\count287
+\c@Gm@tempcnt=\count288
+\Gm@bindingoffset=\dimen151
+\Gm@wd@mp=\dimen152
+\Gm@odd@mp=\dimen153
+\Gm@even@mp=\dimen154
+\Gm@layoutwidth=\dimen155
+\Gm@layoutheight=\dimen156
+\Gm@layouthoffset=\dimen157
+\Gm@layoutvoffset=\dimen158
+\Gm@dimlist=\toks18
+)
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+)
+(d:/HHN/Tools/Latex/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdfte
+x.def
+File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count289
+)
+No file probe.aux.
+\openout1 = `probe.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+Package scrbase Info: activating english \abstractname on input line 5.
+Package scrbase Info: activating english \partname on input line 5.
+Package scrbase Info: activating english \chaptername on input line 5.
+Package scrbase Info: activating english \appendixname on input line 5.
+Package scrbase Info: activating english \figurename on input line 5.
+Package scrbase Info: activating english \tablename on input line 5.
+Package scrbase Info: activating english \contentsname on input line 5.
+Package scrbase Info: activating english \listfigurename on input line 5.
+Package scrbase Info: activating english \listtablename on input line 5.
+Package scrbase Info: activating english \bibname on input line 5.
+Package scrbase Info: activating english \indexname on input line 5.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(71.13188pt, 469.47049pt, 56.9055pt)
+* v-part:(T,H,B)=(71.13188pt, 688.5567pt, 85.35826pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=469.47049pt
+* \textheight=688.5567pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-41.0131pt
+* \headheight=18.125pt
+* \headsep=21.75pt
+* \topskip=12.0pt
+* \footskip=50.75pt
+* \marginparwidth=49.79233pt
+* \marginparsep=12.8401pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+PROBE baselineskip=17.99446pttextheight=688.5567ptparskip=11.74988pt plus 4.112
+52pt minus 1.7624ptfootskip=50.75pt
+[1
+
+{d:/HHN/Tools/Latex/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+ (./probe.aux)
+ ***********
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-05-26>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 4400 strings out of 467167
+ 102097 string characters out of 5405227
+ 653727 words of memory out of 5000000
+ 33706 multiletter control sequences out of 15000+600000
+ 629119 words of font info for 43 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 108i,7n,107p,11275b,339s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<d:/HHN/Tools/Latex/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r12.pfb>
+Output written on probe.pdf (1 page, 9539 bytes).
+PDF statistics:
+ 13 PDF objects out of 1000 (max. 8388607)
+ 7 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

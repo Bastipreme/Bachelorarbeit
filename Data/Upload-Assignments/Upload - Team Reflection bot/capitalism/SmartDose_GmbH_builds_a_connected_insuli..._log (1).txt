@@ -1,0 +1,111 @@
+Student:
+SmartDose GmbH builds a connected insulin pen for diabetic patients.
+
+The pen logs every injection and syncs data to a mobile app.
+
+9 developers, running Scrum with 2-week sprints - working well for 3 years.
+
+
+The CEO returns from a digital health conference with a new plan:
+
+"We add an ML model that analyses each patient's blood glucose history and
+
+automatically recommends the next insulin dose. This makes the pen truly smart."
+
+
+What changes immediately:
+
+- The ML model is trained on data, not coded. Its output is probabilistic -
+
+it will sometimes be wrong, and a wrong insulin dose can be life-threatening.
+
+- Training requires blood glucose histories, meal logs, and physical activity
+
+data from real patients. This is highly sensitive personal health data.
+
+- EU law (MDR) classifies this AI as a medical device. The model must be
+
+clinically validated and approved before any real patient acts on its output.
+
+- Every patient is different. A dose that is correct for one person may be
+
+dangerous for another - the model must learn per-patient patterns and
+
+must be monitored continuously for safety.
+
+- Nobody on the current team has ML or data science experience.
+
+
+The CEO wants a prototype in 6 months and regulatory approval in 18 months.
+
+AI Coach:
+You're landing on an important pivot in the development focus of the project, especially given the critical safety implications involved. What do you see as the biggest challenge in meeting the CEO's desired timeline for both the prototype and regulatory approval?
+
+Student:
+Three situations. For each: pick one option and justify your choice.
+
+"We would do both" is not an answer.
+
+
+SITUATION A - WHO DO YOU HIRE FIRST?
+
+You have budget for exactly 2 new hires.
+
+You need all four of these roles:
+
+(1) ML Engineer - builds and trains the model
+
+(2) Clinical Validator - tests whether the model is medically safe
+
+(3) Data Privacy Officer - ensures GDPR compliance for patient data
+
+(4) Regulatory Specialist - navigates MDR approval with the authorities
+
+
+a. Which 2 do you hire first?
+
+b. What risk do you consciously accept by waiting on the other 2?
+
+c. What is the earliest point in the project where the missing roles become a critical bottleneck?
+
+AI Coach:
+Let's break this down step-by-step:
+
+a. Which 2 do you hire first?
+
+Consider focusing on hiring the **ML Engineer** and the **Clinical Validator** first. The ML Engineer is essential for building the model since technical capabilities are immediate priorities, and the Clinical Validator is crucial to address safety, which is paramount given the risks.
+
+b. What risk do you consciously accept by waiting on the other 2?
+
+By delaying hiring the **Data Privacy Officer** and **Regulatory Specialist**, you accept significant risks around compliance. Without these roles, you may inadvertently mishandle sensitive patient data or not meet the regulatory requirements, which could lead to severe delays or even project failure.
+
+c. What is the earliest point in the project where the missing roles become a critical bottleneck?
+
+The missing roles become critical during the clinical validation phase, particularly when preparing for regulatory approval. If the Clinical Validator is not involved early enough, you might end up with a model that, even if technically sound, isn't safe for patient use according to medical standards, risking the entire project. 
+
+How do you see the potential challenges in balancing these roles throughout the development process?
+
+Student:
+i would hire (1) and (2) from Situation A first
+
+AI Coach:
+That's a solid choice. Focusing on the **ML Engineer** and **Clinical Validator** addresses both the technical core of the project and the critical safety aspects. However, what do you think might happen if you encounter data privacy or regulatory issues early on without the Data Privacy Officer and Regulatory Specialist on board?
+
+Student:
+Not so important, because health is more important
+
+AI Coach:
+You've highlighted a key priority: patient safety is indeed paramount. However, how might overlooking data privacy and regulatory considerations impact the perceived trustworthiness of your solution, especially when it comes to user acceptance and future approvals?
+
+Student:
+Health > trustworthiness
+
+AI Coach:
+Your emphasis on health is understandable, especially in a life-critical application. Yet, consider this: if the model eventually provides unsafe recommendations due to overlooked data privacy or regulatory issues, how might that affect the long-term viability of the project? Would patient safety alone be enough to navigate through potential legal or reputational fallout?
+
+Student:
+well, my ceo wants that
+
+AI Coach:
+You’re right to consider the CEO's priorities, as they guide project direction. However, if the CEO insists on speed over compliance, what strategies might you propose to balance the urgency of the prototype with the essential need for regulatory and privacy considerations?
+

@@ -1,0 +1,30 @@
+Student:
+Three situations. For each: pick one option and justify your choice.
+
+"We would do both" is not an answer.
+
+SITUATION A - WHO DO YOU HIRE FIRST?
+
+You have budget for exactly 2 new hires.
+
+You need all four of these roles:
+
+(1) ML Engineer - builds and trains the model
+
+(2) Clinical Validator - tests whether the model is medically safe
+
+(3) Data Privacy Officer - ensures GDPR compliance for patient data
+
+(4) Regulatory Specialist - navigates MDR approval with the authorities
+
+a. Which 2 do you hire first? 
+
+AI Coach:
+Which two roles do you think are most crucial for the project's initial phase, considering both technical and regulatory requirements? What specific challenges do you foresee if one of them is not onboarded early?
+
+Student:
+Give me a hint on what i should focus on
+
+AI Coach:
+Consider the immediate needs of the project, especially around patient safety and regulatory compliance. Think about which roles directly impact the ability to move forward with model development and approval. What would happen if you prioritize technical development over regulatory and safety assessment?
+

@@ -1,0 +1,634 @@
+\chapter{Methodik}
+\label{cha:methodik}
+
+Um die in Abschnitt~\ref{sec:forschungsfrage} formulierte Forschungsfrage empirisch zu beantworten,
+bedarf es einer methodischen Vorgehensweise, die sowohl die wahrgenommene als auch die tatsächlich
+gezeigte Reflexion der Studierenden erfasst. Empirische Untersuchungen in der
+Software-Engineering-Forschung stützen sich dafür typischerweise auf eine Kombination aus Experimenten,
+Fallstudien und Befragungen \cite{stolGuidelinesConductingSoftware2020}. Die vorliegende Arbeit folgt
+diesem Grundgedanken, indem sie ein Mini-Experiment im Rahmen einer regulären Lehrveranstaltung mit
+einer Befragung sowie einer qualitativen Auswertung der entstandenen Bearbeitungen verbindet.
+
+Dieses Kapitel gliedert sich entsprechend in sieben Abschnitte: Zunächst wird das übergeordnete
+Forschungsdesign erläutert (Abschnitt~\ref{sec:forschungsdesign}), gefolgt von der Datenerhebung
+(Abschnitt~\ref{sec:datenerhebung}) und der Stichprobe (Abschnitt~\ref{sec:stichprobe}). Anschließend
+werden der Aufbau des Mini-Experiments sowie der eingesetzten Fragebögen im Detail dargestellt
+(Abschnitt~\ref{sec:fragebogen-experiment}) und das Verfahren der Datenanalyse beschrieben
+(Abschnitt~\ref{sec:datenanalyse}), bevor abschließend die Gütekriterien
+(Abschnitt~\ref{sec:guetekriterien}) sowie forschungsethische und datenschutzrechtliche Aspekte
+(Abschnitt~\ref{sec:forschungsethik}) eingeordnet werden.
+
+\section{Forschungsdesign}
+\label{sec:forschungsdesign}
+Die vorliegende Arbeit verfolgt einen explorativen Mixed-Methods-Ansatz \cite{kuckartzMixedMethodsMethodologie2014},
+um den in Abschnitt~\ref{sec:forschungsfrage} formulierten Vergleich zwischen dem Reflexionsbot und
+einem generischen KI-System empirisch zu untersuchen. Qualitative und quantitative Daten werden dabei nicht nacheinander, sondern parallel
+erhoben und erst in der Auswertung zusammengeführt (konvergentes Parallel-Design, bei Creswell und
+Plano Clark \emph{convergent design})
+\cite{kuckartzMixedMethodsMethodologie2014, creswellDesigningConductingMixed2018}: Die quantitativen Fragebogendaten
+liefern ein breites, aber oberflächliches Bild der wahrgenommenen Wirkung beider Systeme, während
+die qualitative Inhaltsanalyse der tatsächlichen Bearbeitungen zeigt, wie tief die Studierenden sich
+inhaltlich mit den Prozessentscheidungen auseinandergesetzt haben. Erst die Kombination beider
+Perspektiven erlaubt es, wahrgenommene und tatsächliche Reflexionstiefe zu unterscheiden.
+Abbildung~\ref{fig:forschungsdesign} veranschaulicht diesen Ablauf.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+	node distance=0.9cm and 1.1cm,
+	box/.style={rectangle, draw, rounded corners, align=center, minimum height=0.9cm, text width=3.6cm, font=\small, inner sep=5pt},
+	erhebung/.style={box, draw=black!55, fill=black!7},
+	gruppeRB/.style={box, draw=codeblue, line width=0.8pt, fill=codeblue!12},
+	gruppeAI/.style={box, draw=codegreen, line width=0.8pt, fill=codegreen!12},
+	analyse/.style={box, draw=black!55, fill=white},
+	zusammen/.style={box, draw=black, line width=1pt, fill=black!12},
+	arr/.style={-{Latex[length=2mm]}, draw=black!65},
+	arrRB/.style={-{Latex[length=2mm]}, draw=codeblue, line width=0.8pt},
+	arrAI/.style={-{Latex[length=2mm]}, draw=codegreen, line width=0.8pt}
+	]
+	\node[erhebung] (pre) {Prä-Survey (n=22)};
+	\node[gruppeRB, below left=of pre] (rb) {Reflexionsbot-Gruppe: Mini-Experiment (16 Bearbeitungen)};
+	\node[gruppeAI, below right=of pre] (ai) {Generic-AI-Gruppe: Mini-Experiment (15 Bearbeitungen)};
+	\node[erhebung, below=2.5cm of pre] (post) {Post-Survey (n=20) und Bearbeitungen/Chatlogs};
+	\node[analyse, below left=of post] (quant) {Quantitative Analyse (deskriptiv)};
+	\node[analyse, below right=of post] (qual) {Qualitative Inhaltsanalyse};
+	\node[zusammen, below=2.5cm of post] (merge) {Zusammenführung (Triangulation)};
+
+	\draw[arrRB] (pre) -- (rb);
+	\draw[arrAI] (pre) -- (ai);
+	\draw[arrRB] (rb) -- (post);
+	\draw[arrAI] (ai) -- (post);
+	\draw[arr] (post) -- (quant);
+	\draw[arr] (post) -- (qual);
+	\draw[arr] (quant) -- (merge);
+	\draw[arr] (qual) -- (merge);
+\end{tikzpicture}
+\caption{Konvergentes Parallel-Design des Mini-Experiments}
+\label{fig:forschungsdesign}
+\end{figure}
+
+\section{Datenerhebung}
+\label{sec:datenerhebung}
+Die Datenerhebung erfolgte in drei aufeinanderfolgenden Phasen, die alle im Rahmen derselben
+Übungseinheit der Lehrveranstaltung \glqq Grundlagen des Software Engineering 1\grqq{} stattfanden.
+
+In der ersten Phase füllten alle Studierenden vor Beginn der eigentlichen Aufgabenbearbeitung einen
+Prä-Survey aus. Dieser wurde als freiwilliges, pseudonymisiertes Online-Formular (persönlicher,
+selbst gewählter Code statt Klarname) bereitgestellt und erfasste
+unter anderem die Vorerfahrung mit KI-Systemen sowie das selbsteingeschätzte Reflexionsverhalten (vgl.
+Abschnitt~\ref{sec:fragebogen-experiment}).
+
+In der zweiten Phase bearbeiteten die Studierenden die beiden Prozessszenarien mit dem ihrer Gruppe
+zugewiesenen KI-System. Dabei entstanden zwei Arten von Rohdaten: zum einen die schriftlichen
+Bearbeitungsdokumente, in denen die Studierenden ihre Entscheidungen und Begründungen zu den
+Dilemma-Situationen festhielten, zum anderen die Chatverläufe (Interaktionsprotokolle) mit dem
+jeweiligen KI-System. Beide Datenquellen bildeten gemeinsam die Grundlage für die spätere qualitative
+Inhaltsanalyse (vgl. Abschnitt~\ref{sec:datenanalyse}).
+
+In der dritten Phase füllten die Studierenden im direkten Anschluss an die Bearbeitung einen
+Post-Survey aus, der spiegelbildlich zum Prä-Survey aufgebaut war und die Erfahrung mit dem jeweils
+genutzten System sowie die wahrgenommene Unterstützung eigenständigen Denkens erfasste.
+
+Ein persönlicher, selbst gewählter Code erlaubte es, die Angaben aus Prä- und Post-Survey einer Person
+zuzuordnen, ohne dass Klarnamen erhoben wurden (Pseudonymisierung). Da dieser Code
+teilweise auch als Pseudonym für den Upload der Bearbeitungsdokumente verwendet wurde, konnten die
+quantitativen Survey-Daten grundsätzlich auch mit den qualitativ kodierten Fällen derselben Person
+verknüpft werden (vgl. Abschnitt~\ref{sec:datenanalyse}).
+
+\section{Stichprobe}
+\label{sec:stichprobe}
+Die Stichprobe besteht aus Studierenden des Studiengangs Software Engineering (Bachelor of Science) an
+der Hochschule Heilbronn in Sontheim, die im Rahmen der regulären Übung zur Lehrveranstaltung \glqq
+Grundlagen des Software Engineering 1\grqq{} an dem Mini-Experiment teilnahmen. Diese Veranstaltung ist
+im ersten Fachsemester des Studiengangs verortet, was die im Folgenden beschriebene Zusammensetzung der
+Stichprobe (überwiegend Erstsemester mit noch geringer einschlägiger Vorerfahrung) erklärt. Die
+Teilnahme war freiwillig, die Zuteilung zur Reflexionsbot- oder zur Generic-AI-Gruppe erfolgte durch
+die Übungsleitung vor Beginn der Bearbeitung.
+
+Vor der Bearbeitung wurden alle Studierenden im Prä-Survey über Zweck und Ablauf des Mini-Experiments
+informiert und um ihre freiwillige Einwilligung zur Teilnahme sowie um die Bestätigung der
+Volljährigkeit gebeten. Eine Person verneinte die Einwilligungsfrage ausdrücklich, füllte im Anschluss
+jedoch dennoch sowohl Prä- als auch Post-Survey vollständig aus. Da für diese Person keine wirksame
+Einwilligung vorliegt, wurden ihre Angaben vollständig von der quantitativen Auswertung ausgeschlossen.
+Dieselbe Person konnte ohnehin auch für die qualitative Inhaltsanalyse nicht berücksichtigt werden, da
+keine eigene Ausgangsantwort zu den Prozessszenarien auffindbar war.
+
+Für die quantitative Auswertung liegen nach diesem Ausschluss n=20 vollständig ausgefüllte
+Post-Survey-Datensätze vor (10 Reflexionsbot, 10 Generic AI) sowie n=22 Prä-Survey-Datensätze. Da nicht
+jeder Personal Code eindeutig einer Person zuzuordnen war, weil er teilweise doppelt vergeben wurde,
+konnten für den Prä-Post-Abgleich n=16 Personen eindeutig verknüpft werden (vgl.
+Abschnitt~\ref{sec:datenanalyse}).
+
+Tabelle~\ref{tab:stichprobe} fasst die Zusammensetzung der Stichprobe zusammen,
+Abbildung~\ref{fig:stichprobe} stellt die drei kategorialen Merkmale zusätzlich grafisch dar. Die
+Stichprobe besteht überwiegend aus Studierenden des ersten Fachsemesters, ergänzt um einzelne
+Studierende höherer Semester sowie eine Austauschstudentin bzw. einen Austauschstudenten. Der
+überwiegende Teil der Teilnehmenden ist männlich, und der Großteil hatte vor dem Mini-Experiment noch
+keine oder nur geringe berufliche Erfahrung im IT-Bereich. Erfahrung mit generativen KI-Chatbots war
+dagegen nahezu durchgängig vorhanden. In allen drei erfassten Merkmalen ist die Stichprobe damit
+deutlich einseitig zusammengesetzt.
+
+\begin{table}[htbp]
+\centering
+\caption{Zusammensetzung der Stichprobe (Prä-Survey, n=22)}
+\label{tab:stichprobe}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.6cm}
+                >{\raggedright\arraybackslash}p{6.0cm}
+                >{\raggedleft\arraybackslash}p{1.8cm}}
+\toprule
+\textbf{Merkmal} & \textbf{Ausprägung} & \textbf{Anzahl} \\
+\midrule
+Fachsemester        & erstes Fachsemester        & 15 \\
+                    & höheres Fachsemester       & 6 \\
+                    & Austauschstudierende       & 1 \\
+\midrule
+Geschlecht          & männlich                   & 19 \\
+                    & weiblich                   & 2 \\
+                    & keine Angabe               & 1 \\
+\midrule
+Vorerfahrung mit generativen KI-Chatbots
+                    & bereits genutzt            & 20 \\
+                    & nicht genutzt              & 2 \\
+\midrule
+Alter               & 19 bis 29 Jahre (M=22.0)   & \\
+Berufserfahrung im IT-Bereich
+                    & Median 0 Monate            & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+	xbar stacked,
+	width=0.86\textwidth, height=5.2cm,
+	xmin=0, xmax=22.4,
+	xtick={0,5,10,15,20},
+	xlabel={Anzahl Teilnehmende (n=22)},
+	xlabel style={font=\small},
+	symbolic y coords={KI-Vorerfahrung, Geschlecht, Fachsemester},
+	ytick=data,
+	y tick label style={font=\small},
+	x tick label style={font=\small},
+	bar width=20pt,
+	axis lines*=left,
+	enlarge y limits=0.45,
+	every node near coord/.append style={font=\scriptsize, anchor=center},
+]
+\addplot+[fill=codeblue!75, draw=codeblue,
+          nodes near coords, point meta=explicit symbolic,
+          every node near coord/.append style={text=white, font=\scriptsize}]
+  coordinates {(15,Fachsemester)[erstes Semester: 15]
+               (19,Geschlecht)[männlich: 19]
+               (20,KI-Vorerfahrung)[bereits genutzt: 20]};
+\addplot+[fill=codeblue!32, draw=codeblue,
+          nodes near coords, point meta=explicit symbolic,
+          every node near coord/.append style={text=black, font=\scriptsize}]
+  coordinates {(6,Fachsemester)[höheres Sem.: 6]
+               (2,Geschlecht)[2]
+               (2,KI-Vorerfahrung)[2]};
+\addplot+[fill=codeblue!10, draw=codeblue,
+          nodes near coords, point meta=explicit symbolic,
+          every node near coord/.append style={text=black, font=\scriptsize}]
+  coordinates {(1,Fachsemester)[1]
+               (1,Geschlecht)[1]
+               (0,KI-Vorerfahrung)[]};
+\end{axis}
+\end{tikzpicture}
+\caption[Zusammensetzung der Stichprobe]{Zusammensetzung der Stichprobe nach Fachsemester,
+Geschlecht und Vorerfahrung mit generativen KI-Chatbots (n=22). Die mittleren Segmente stehen für
+höhere Fachsemester (6), weibliche Teilnehmende (2) und fehlende KI-Vorerfahrung (2). Die hellen
+Segmente stehen für Austauschstudierende (1) und eine fehlende Angabe zum Geschlecht (1).}
+\label{fig:stichprobe}
+\end{figure}
+
+Für die qualitative Inhaltsanalyse liegen aus den hochgeladenen Bearbeitungsdokumenten und
+Chatverläufen 31 auswertbare Analyseeinheiten vor, die sich auf beide Gruppen verteilen (15 Team AI,
+16 Reflexionsbot). Ausgeschlossen wurden zwei erkennbare Testeinreichungen (Ordner mit dem Zusatz
+\glqq (Test)\grqq{} im Namen) sowie derselbe bereits genannte Fall ohne eigene Ausgangsantwort und ohne
+wirksame Einwilligung. Da bei einem erheblichen Teil der Einreichungen die Autorenschaft nicht eindeutig
+den Studierenden zuzuordnen ist (vgl. Abschnitt~\ref{sec:datenanalyse}), reduziert sich die für die
+Häufigkeitsauswertung nutzbare Stichprobe auf 11 Fälle mit eindeutig studentischer Autorenschaft.
+
+\section{Fragebogen und Mini-Experiment}
+\label{sec:fragebogen-experiment}
+Das Mini-Experiment wurde im Rahmen der regulären Übung zur Lehrveranstaltung \glqq Grundlagen des
+Software Engineering 1\grqq{} durchgeführt. Die Studierenden wurden in zwei Gruppen eingeteilt: die
+\emph{Reflexionsbot}-Gruppe (in den Rohdaten und in den Anhangstabellen \emph{Reflection Bot}), die die Aufgaben mit
+dem in dieser Arbeit entwickelten Reflexionsbot bearbeitete, und die \emph{Generic-AI}-Gruppe (in
+Tabellen und in der Kodierung auch \emph{Team AI}), die einen generischen KI-Chatbot nutzte, der
+Anfragen direkt und ohne systematische Rückfragen beantwortet. Als generisches System durften die Studierenden der Vergleichsgruppe frei
+zwischen den öffentlich zugänglichen Consumer-Versionen von ChatGPT (OpenAI), Gemini (Google) und
+Claude (Anthropic) wählen, wobei der Zugriff über die jeweiligen Weboberflächen auf den eigenen
+Endgeräten der Studierenden (Laptop, Tablet oder Smartphone) erfolgte. Anders als beim Reflexionsbot wurde das
+Verhalten dieser Systeme nicht über eine Systemnachricht gesteuert. Die einzige inhaltliche Vorgabe
+bestand in der Aufgabenanweisung, die eigenen Entscheidungen in das generische System einzugeben und
+um eine kritische Analyse beziehungsweise das stärkste Gegenargument zu bitten (\glqq AI
+Analysis\grqq{}, vgl. \hyperref[app:szenarien]{Anhang~A.4}). Welche Modellstufe die einzelnen Systeme zum Erhebungszeitpunkt
+(24.\,Juni 2026) jeweils bereitstellten, war nicht kontrollierbar und wurde nicht erfasst. Beide
+Gruppen erhielten dieselben zwei Prozessszenarien: eine Produktentscheidung in einem regulierten
+ML-Projekt (\glqq SmartDose\grqq{}, vgl. Abschnitt~\ref{sec:konzept-reflexionsbot}) sowie
+Koordinationsentscheidungen in einem verteilten Team (\glqq LearnLoop\grqq{}). Zu beiden Szenarien
+waren jeweils drei Dilemma-Situationen mit Entscheidung, Begründung und Reflexion zu bearbeiten,
+gefolgt von einer Einschätzung der Gegenargumentation des jeweiligen KI-Systems.
+Tabelle~\ref{tab:bedingungen} stellt die Rahmenbedingungen beider Gruppen gegenüber und macht
+sichtbar, welche Variablen kontrolliert waren und welche nicht.
+
+\begin{table}[htb]
+\centering
+\caption{Gegenüberstellung der beiden Versuchsbedingungen}
+\label{tab:bedingungen}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth}
+                >{\raggedright\arraybackslash}p{0.32\textwidth}
+                >{\raggedright\arraybackslash}p{0.32\textwidth}}
+\toprule
+\textbf{Merkmal} & \textbf{Reflexionsbot} & \textbf{Generic AI} \\
+\midrule
+Zugang & Feste Web-Anwendung (Streamlit) &
+Frei gewählte Consumer-Oberflächen auf eigenen Endgeräten \\
+\midrule
+Sprachmodell & \texttt{gpt-4o-mini}, festgelegt &
+ChatGPT, Gemini oder Claude; Modellstufe nicht erfasst \\
+\midrule
+Steuerung des Verhaltens & Feste Systemnachricht mit sokratischen Rückfragen und adaptiver Tiefe &
+Keine Systemnachricht, ungelenkte Interaktion \\
+\midrule
+Direkte Lösungen & Nicht vorgesehen &
+Reguläres Systemverhalten \\
+\midrule
+Vorgabe zur Gegenargumentation & Im laufenden Dialog enthalten &
+Eigene Teilaufgabe \glqq AI Analysis\grqq{} \\
+\midrule
+Protokollierung & Chatexport in der Anwendung enthalten &
+Manuelle Sicherung durch die Studierenden \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Die Gegenüberstellung zeigt zugleich die Grenze des Vergleichs. Kontrolliert waren auf Seiten des
+Reflexionsbots Modell, Systemnachricht und Protokollierung, auf Seiten der Vergleichsgruppe keine
+dieser Größen. Der Vergleich ist daher als Kontrast zwischen einem gezielt gestalteten System und
+einem typischen alltäglichen KI-Zugang zu verstehen und nicht als kontrollierter Modellvergleich
+(vgl. Abschnitt~\ref{sec:limitationen}).
+
+Vor der Übung füllten die Studierenden einen Prä-Survey aus, der unter anderem Vorerfahrung mit
+KI-Systemen, selbsteingeschätztes Prozessverständnis (in Anlehnung an die Stufen Beschreiben,
+Begründen und Abwägen) sowie allgemeines Reflexionsverhalten erfasste. Im Anschluss an die Übung
+folgte ein Post-Survey mit spiegelbildlichen Items zur Erfahrung mit dem jeweils zugewiesenen
+KI-System, zur wahrgenommenen Unterstützung eigenständigen Denkens und zur eingeschätzten
+Kompetenzentwicklung. Beide Fragebögen wurden über ein pseudonymisiertes, freiwilliges Online-Formular
+erhoben. Ein persönlicher Code erlaubte die Zuordnung von Prä- und Post-Angaben, ohne dass Klarnamen
+erhoben wurden. Abbildung~\ref{fig:ablauf-experiment} fasst den zeitlichen Ablauf der Übungseinheit
+mit den jeweils eingesetzten Instrumenten zusammen.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[
+	phase/.style={rectangle, draw=black!55, fill=black!8, rounded corners, align=center,
+	              text width=3.5cm, minimum height=0.75cm, font=\small\bfseries, inner sep=4pt},
+	instr/.style={rectangle, draw=black!40, fill=white, rounded corners, align=left,
+	              text width=3.5cm, font=\scriptsize, inner sep=4pt},
+	grp/.style={rectangle, rounded corners, align=center, text width=3.3cm,
+	            minimum height=0.7cm, font=\scriptsize, inner sep=4pt},
+	arr/.style={-{Latex[length=2mm]}, draw=black!65, line width=0.7pt}
+	]
+% Drei Phasen nebeneinander
+\node[phase] (p1) at (0,0)   {Phase 1\\[-1pt] Prä-Survey};
+\node[phase] (p2) at (5.3,0) {Phase 2\\[-1pt] Intervention};
+\node[phase] (p3) at (10.6,0) {Phase 3\\[-1pt] Post-Survey};
+\draw[arr] (p1) -- (p2);
+\draw[arr] (p2) -- (p3);
+
+% Instrumente unter Phase 1
+\node[instr, below=0.45cm of p1] (i1) {%
+	Demografie und KI-Vorerfahrung\\
+	Wissenstest ($t_0$)\\
+	Selbsteinschätzung ($t_0$)\\
+	Reflexionsverhalten ($t_0$)};
+\draw[arr] (p1) -- (i1);
+
+% Gruppen unter Phase 2
+\node[grp, draw=codeblue, fill=codeblue!10, below=0.45cm of p2] (g1)
+	{\textbf{Reflexionsbot}};
+\node[grp, draw=codegreen, fill=codegreen!10, below=0.25cm of g1] (g2)
+	{\textbf{Generic AI}};
+\node[instr, below=0.3cm of g2] (i2) {%
+	Szenario SmartDose\\
+	Szenario LearnLoop\\
+	je Task 1--3 und, nur Generic AI, AI Analysis};
+\draw[arr] (p2) -- (g1);
+
+% Instrumente unter Phase 3
+\node[instr, below=0.45cm of p3] (i3) {%
+	Wissenstest ($t_1$)\\
+	Selbsteinschätzung ($t_1$)\\
+	Reflexionsverhalten ($t_1$)\\
+	Systembewertung\\
+	Kognitive Last};
+\draw[arr] (p3) -- (i3);
+
+\end{tikzpicture}
+\caption[Ablauf des Mini-Experiments mit Erhebungsinstrumenten]{Ablauf des Mini-Experiments mit den
+je Phase eingesetzten Erhebungsinstrumenten. Wissenstest, Selbsteinschätzung und Reflexionsverhalten
+wurden zu beiden Zeitpunkten mit identischen Items erhoben und über den persönlichen Code
+personenbezogen verknüpft.}
+\label{fig:ablauf-experiment}
+\end{figure}
+
+Neben der Auswahl einzelner Items war auch die strukturelle Anlage des Fragebogens bewusst gestaltet.
+Prä- und Post-Survey wurden weitgehend spiegelbildlich aufgebaut, mit identischen oder nur leicht
+angepassten Items zu beiden Zeitpunkten, um Veränderungen pro Person über die Bearbeitung hinweg
+nachvollziehen zu können, statt lediglich zwei unabhängige Momentaufnahmen zu vergleichen. Die Items
+zum selbsteingeschätzten Prozessverständnis wurden gezielt in die drei Stufen Beschreiben, Begründen
+und Abwägen gegliedert, die bewusst an die im Reflexionsstufenmodell nach Hatton und Smith
+(Abschnitt~\ref{sec:reflexionsstufenmodelle}) unterschiedenen Reflexionsniveaus angelehnt sind: Die
+Beschreiben-Items entsprechen den unteren, rein deskriptiven Stufen, die Begründen- und
+Abwägen-Items den höheren, tatsächlich reflexiven Stufen. Diese Parallelität erlaubt es, die im
+Survey erhobene Selbsteinschätzung inhaltlich auf dieselbe theoretische Grundlage zu beziehen wie die
+qualitative Kodierung der Bearbeitungen, auch wenn beide Erhebungen methodisch unabhängig
+voneinander bleiben. Ergänzend wurde ein kurzer objektiver Wissenstest zu Scrum und Prozessmodellen
+mit sechs Multiple-Choice-Fragen aufgenommen, um die selbstberichtete Kompetenzeinschätzung um ein
+von der Selbstauskunft unabhängiges Maß zu ergänzen. Jede Frage wird mit einem Punkt bewertet (0 bis 6
+Punkte). Die Fragen und der vollständige Bewertungsschlüssel sind in \hyperref[app:fragebogen]{Anhang~A.5}, die Ergebnisse in
+\hyperref[app:statistik]{Anhang~A.6} dokumentiert.
+
+Die überwiegende Mehrheit der Items (Erfahrung mit KI-Systemen, selbsteingeschätzte Kompetenz,
+Reflexionsverhalten, Erwartungen sowie die Bewertung des jeweiligen KI-Systems) wurde auf einer
+5-stufigen Likert-Skala erhoben (1 = starke Ablehnung, 5 = starke Zustimmung). Die Mittelwerte in
+Kapitel~\ref{cha:ergebnisse} beziehen sich, sofern nicht anders angegeben, auf diese Skala. Eine
+Ausnahme bildet die Selbsteinschätzung der kognitiven Belastung im Post-Survey, die auf einer separaten
+5-stufigen Skala von \glqq sehr leicht\grqq{} bis \glqq sehr schwierig\grqq{} erfasst wurde. Diese
+Skala wird in Abschnitt~\ref{sec:ergebnisse} gesondert berichtet, da sich ihre Richtung von der
+übrigen Zustimmungsskala unterscheidet. Der
+vollständige Fragebogeninhalt beider Erhebungszeitpunkte ist in \hyperref[app:fragebogen]{Anhang~A.5} dokumentiert.
+Tabelle~\ref{tab:operationalisierung} fasst zusammen, welches Konstrukt zu welchem Zeitpunkt mit
+welchem Format erhoben wurde.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.19\textwidth}
+                  >{\raggedright\arraybackslash}p{0.11\textwidth}
+                  >{\raggedright\arraybackslash}p{0.19\textwidth}
+                  >{\raggedright\arraybackslash}p{0.31\textwidth}}
+\caption{Operationalisierung der quantitativ erhobenen Konstrukte}
+\label{tab:operationalisierung} \\
+\toprule
+\textbf{Konstrukt} & \textbf{Zeitpunkt} & \textbf{Format} & \textbf{Beispiel-Item} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Konstrukt} & \textbf{Zeitpunkt} & \textbf{Format} & \textbf{Beispiel-Item} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+KI-Vorerfahrung & Prä & 4 Items, 5-stufig Likert; 1 Item Häufigkeit &
+\glqq I critically evaluate answers from AI systems before adopting them.\grqq{} \\
+\midrule
+Domänenwissen & Prä und Post & 6 Multiple-Choice-Items, 0--6 Punkte &
+\glqq What is the purpose of a Product Backlog in Scrum?\grqq{} \\
+\midrule
+Prozessverständnis, Stufe 1 (Beschreiben) & Prä und Post & 3 Items, 5-stufig Likert &
+\glqq I can explain what a process model in software development is.\grqq{} \\
+\midrule
+Prozessverständnis, Stufe 2 (Begründen) & Prä und Post & 3 Items, 5-stufig Likert &
+\glqq I can explain why a particular process model is suitable for a specific project.\grqq{} \\
+\midrule
+Prozessverständnis, Stufe 3 (Abwägen) & Prä und Post & 2 Items, 5-stufig Likert &
+\glqq I can weigh which process model best fits a specific scenario and explain why another does
+not.\grqq{} \\
+\midrule
+Reflexionsverhalten & Prä und Post & 5 Items, 5-stufig Likert &
+\glqq I compared multiple options before making a final decision.\grqq{} \\
+\midrule
+Bewertung des Systems & Post & 8 Items, 5-stufig Likert &
+\glqq The AI system prompted more independent thinking than I expected.\grqq{} \\
+\midrule
+Kognitive Last & Post & 6 Items, 5-stufig (1 = very easy bis 5 = very difficult) &
+\glqq How would you rate the overall cognitive effort required by the exercise?\grqq{} \\
+\end{longtable}
+\endgroup
+
+Die Übersicht macht die Parallelisierung sichtbar. Vier der acht Konstrukte wurden zu beiden
+Zeitpunkten mit identischen Items erhoben, sodass sich Veränderungen personenbezogen berechnen
+lassen. Die Bewertung des Systems und die kognitive Last sind naturgemäß nur nach der Bearbeitung
+erhebbar, die KI-Vorerfahrung nur davor.
+
+\newpage
+\section{Datenanalyse}
+\label{sec:datenanalyse}
+Die gesammelten Daten werden sowohl qualitativ als auch quantitativ analysiert und anschließend
+zusammengeführt.
+
+Die quantitativen Fragebogendaten (Prä- und Post-Survey) werden deskriptiv ausgewertet, insbesondere
+im Gruppenvergleich zwischen den Studierenden, die mit dem Reflexionsbot arbeiteten, und jenen, die
+das generische KI-System nutzten. Aufgrund der kleinen Stichprobengröße wird bewusst auf
+inferenzstatistische Tests und Verallgemeinerungsansprüche verzichtet. Die Mittelwertvergleiche dienen
+der deskriptiven Einordnung und der Triangulation mit den qualitativen Befunden.
+
+Die schriftlichen Bearbeitungen der beiden Prozessszenarien sowie die Chatverläufe mit dem jeweiligen
+KI-System werden mittels strukturierender qualitativer Inhaltsanalyse nach Mayring
+\cite{mayringQualitativeInhaltsanalyse2019} ausgewertet. Dabei kommt das in
+Abschnitt~\ref{sec:reflexionsstufenmodelle} eingeführte deduktive Kategoriensystem nach Hatton und
+Smith \cite{hattonSmithReflectionTeacherEducation1995} zum Einsatz, ergänzt um eine Zusatzstufe zur
+Erfassung fehlender Eigenreflexion (Vermeidung, Aufgabenverweigerung). Die Herkunft des Textes wird
+davon getrennt über die Dimension Autorenschaft erfasst (vollständiges Kategoriensystem mit
+Kodierregeln und Autorenschafts-Indikatoren siehe \hyperref[app:kategoriensystem]{Anhang~A.1}). Als Analyseeinheit dient jeweils die
+schriftliche Reflexion einer Teilnehmerin bzw. eines Teilnehmers zu einem der beiden Szenarien
+(Aufgabenteil \glqq Reflect\grqq{} sowie die anschließende Einschätzung der KI-Gegenargumentation).
+
+Da ein Teil der eingereichten Antworten erkennbar nicht von den Studierenden selbst, sondern durch
+Kopieren der Systemantwort entstanden ist, wird zusätzlich zur Reflexionsstufe die Autorenschaft des
+Textes (studentisch, unklar oder KI-generiert) erfasst. Andernfalls würde die Analyse die
+Reflexionsfähigkeit des KI-Systems statt der Studierenden abbilden. Die Kodierung erfolgte durch eine
+einzelne Person anhand der Rohdaten (Chatlogs, eingereichte Dokumente, Formulierungsvergleiche
+zwischen Personen). Eine Zweitkodierung zur Absicherung der Intercoder-Reliabilität wurde im Rahmen
+dieser Arbeit nicht durchgeführt und ist als Limitation in Kapitel~\ref{cha: diskussion} zu benennen.
+
+Der Kodierdurchgang verlief in drei Schritten. Zunächst wurde das aus der Literatur abgeleitete
+Kategoriensystem an einer Teilmenge der Bearbeitungen probeweise angewendet, um zu prüfen, ob sich die
+Stufendefinitionen am vorliegenden Material überhaupt trennscharf anwenden lassen. Dabei zeigte sich,
+dass die vier Originalstufen den häufigsten Fall dieser Stichprobe nicht abbilden, nämlich
+Bearbeitungen ohne jede eigene inhaltliche Aussage. Das Kategoriensystem wurde daraufhin um die
+Zusatzstufe~0 ergänzt und die Stufen~3 und~4 für den Kontext des Software-Prozessmanagements
+ausformuliert (vgl. \hyperref[app:kategoriensystem]{Anhang~A.1}). Im zweiten Schritt wurde das
+gesamte Material mit dem angepassten System kodiert, im dritten wurden alle Fälle erneut
+durchgegangen, um die zwischenzeitlich präzisierten Regeln einheitlich anzuwenden.
+
+Für die Zuordnung galten dabei zwei Entscheidungsregeln. Enthielt eine Bearbeitung Indikatoren
+mehrerer Stufen, wurde die höchste Stufe kodiert, die durch eine ausformulierte Textstelle belegt
+ist, nicht die im Text überwiegende. Blieben nach Sichtung aller verfügbaren Rohdaten Zweifel an der
+Autorenschaft, wurde nicht \glqq KI-generiert\grqq{}, sondern die Zwischenkategorie \glqq
+unklar\grqq{} vergeben. Beide Regeln sind konservativ gewählt: Die erste verhindert, dass einzelne
+schwache Passagen eine erkennbare Abwägung entwerten, die zweite, dass ein Verdacht als Nachweis
+gewertet wird. Wie stark die Kategorie \glqq unklar\grqq{} die zentrale Auslagerungskennzahl prägt,
+wird in Abschnitt~\ref{sec:limitationen} eigens diskutiert.
+
+Abbildung~\ref{fig:kodierbaum} stellt den zweistufigen Ablauf dar. Entscheidend ist die Reihenfolge:
+Die Autorenschaft wird \emph{vor} der Reflexionsstufe geprüft, damit nicht die Reflexionsfähigkeit des
+KI-Systems anstelle der studentischen Leistung kodiert wird.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[
+	start/.style={rectangle, draw=black!55, fill=black!8, rounded corners, align=center,
+	              text width=4.6cm, minimum height=0.7cm, font=\small, inner sep=4pt},
+	pruef/.style={diamond, aspect=2.4, draw=black!60, fill=white, align=center,
+	              font=\scriptsize, inner sep=1pt},
+	res/.style={rectangle, draw=black!50, rounded corners, align=center, text width=2.5cm,
+	            minimum height=0.6cm, font=\scriptsize, inner sep=3pt},
+	stufe/.style={rectangle, draw=codeblue, fill=codeblue!10, rounded corners, align=center,
+	              text width=5.2cm, minimum height=0.7cm, font=\scriptsize, inner sep=4pt},
+	arr/.style={-{Latex[length=1.8mm]}, draw=black!65},
+	lbl/.style={font=\scriptsize, inner sep=1.5pt, fill=white}
+	]
+\node[start] (a) at (0,0) {Schriftliche Analyseeinheit};
+\node[font=\scriptsize\itshape, anchor=west] at (-6.6,-0.9) {Stufe 1: Autorenschaft};
+\node[pruef] (p) at (0,-1.7)
+	{KI-Merkmale vorhanden?\\ Chatlog, Prompt-Export,\\ Textgleichheit};
+\draw[arr] (a) -- (p);
+
+\node[res, fill=black!5] (ki) at (-4.4,-3.3) {\textbf{KI-generiert}};
+\node[res, fill=black!5] (un) at (0,-3.3)    {\textbf{unklar}};
+\node[res, draw=codegreen, fill=codegreen!12] (st) at (4.4,-3.3) {\textbf{studentisch}};
+\draw[arr] (p.west) -- ++(-1.6,0) |- (ki.north) node[lbl, pos=0.72] {eindeutig};
+\draw[arr] (p.south) -- (un.north) node[lbl, pos=0.5] {Zweifel};
+\draw[arr] (p.east) -- ++(1.6,0) |- (st.north) node[lbl, pos=0.72] {keine};
+
+\node[font=\scriptsize, align=center, text width=4.2cm] (aus) at (-2.2,-4.6)
+	{fließt nur in die Autorenschafts\-kennzahl ein, keine Stufenkodierung};
+\draw[arr, dashed, draw=black!45] (ki.south) -- (aus.north west);
+\draw[arr, dashed, draw=black!45] (un.south) -- (aus.north east);
+
+\node[font=\scriptsize\itshape, anchor=west] at (-6.6,-5.9) {Stufe 2: Reflexionstiefe};
+\node[stufe] (s) at (4.4,-5.9)
+	{Kodierung nach Hatton und Smith,\\ Stufen 0 bis 4};
+\draw[arr] (st) -- (s);
+\end{tikzpicture}
+\caption[Zweistufiger Kodierprozess]{Zweistufiger Kodierprozess je Analyseeinheit. Nur Bearbeitungen
+mit studentischer Autorenschaft werden anschließend nach Reflexionsstufen kodiert. Damit wird die
+Textqualität von der studentischen Eigenleistung entkoppelt.}
+\label{fig:kodierbaum}
+\end{figure}
+
+Die Analyseeinheit wurde bewusst auf den Aufgabenteil \glqq Reflect\grqq{} samt anschließender
+Einschätzung der KI-Gegenargumentation begrenzt und nicht auf die gesamte Bearbeitung ausgeweitet.
+Nur in diesem Teil fordert die Aufgabenstellung beide Gruppen gleichermaßen zu einer Begründung der
+eigenen Entscheidung auf, sodass die kodierten Textstellen über beide Bedingungen hinweg vergleichbar
+sind. Die Tasks~1 und~2 verlangen dagegen primär Analyse und Entscheidung, sodass dort auftretende
+Unterschiede eher die Aufgabenstellung als die Reflexionstiefe abbilden würden.
+
+Die Zusammenführung beider Datenstränge (Triangulation) erfolgt fallbezogen über den persönlichen
+Code in Form einer Gegenüberstellung (Joint Display): Für Personen, bei denen sowohl eine
+Autorenschafts- und Reflexionsstufen-Kodierung als auch Survey-Antworten vorliegen, werden das
+dokumentierte Bearbeitungsverhalten und die Selbstauskunft Fall für Fall nebeneinandergestellt. Ein
+Befund gilt dabei als \emph{konvergent}, wenn beide Perspektiven in dieselbe Richtung weisen (etwa
+eine zurückhaltende Selbsteinschätzung bei zugleich wenig reflektierter Bearbeitung), und als
+\emph{divergent}, wenn sie sich widersprechen (etwa eine hohe Nützlichkeitsbewertung bei nachweislich
+kopierter Bearbeitung). Insbesondere die divergenten Fälle sind für die Fragestellung aufschlussreich
+und werden in Abschnitt~\ref{sec:selbstauskunft-verhalten} vertieft.
+Abbildung~\ref{fig:jointdisplay} zeigt das Schema dieser Zusammenführung.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[
+	strang/.style={rectangle, draw=black!50, rounded corners, align=left, text width=4.3cm,
+	               minimum height=1.9cm, font=\scriptsize, inner sep=5pt},
+	code/.style={rectangle, draw=black!60, fill=black!8, rounded corners, align=center,
+	             text width=3.2cm, minimum height=0.7cm, font=\small\bfseries, inner sep=4pt},
+	fall/.style={rectangle, rounded corners, align=left, text width=4.6cm,
+	             font=\scriptsize, inner sep=5pt, minimum height=1.35cm},
+	arr/.style={-{Latex[length=1.8mm]}, draw=black!65}
+	]
+\node[strang, draw=codegreen, fill=codegreen!8] (q) at (-3.4,0)
+	{\textbf{Quantitativer Strang}\\[2pt]
+	 Wissenstest, Prä und Post\\
+	 $\Delta$ Selbsteinschätzung\\
+	 Systembewertung};
+\node[strang, draw=codeblue, fill=codeblue!8] (l) at (3.4,0)
+	{\textbf{Qualitativer Strang}\\[2pt]
+	 Autorenschaft\\
+	 Reflexionsstufe 0 bis 4\\
+	 Chatverlauf};
+
+\node[code] (c) at (0,-2.3) {Persönlicher Code};
+\draw[arr] (q.south) -- (c.north west);
+\draw[arr] (l.south) -- (c.north east);
+
+\node[fall, draw=black!45, fill=black!5] (kon) at (-3.4,-4.3)
+	{\textbf{konvergent}\\
+	 Beide Perspektiven weisen in dieselbe Richtung, etwa geringe Reflexion bei
+	 zurückhaltender Selbsteinschätzung};
+\node[fall, draw=black!45, fill=black!5] (div) at (3.4,-4.3)
+	{\textbf{divergent}\\
+	 Die Perspektiven widersprechen sich, etwa hohe Nützlichkeitsbewertung bei
+	 nachweislich kopierter Bearbeitung};
+\draw[arr] (c.south) -- (kon.north);
+\draw[arr] (c.south) -- (div.north);
+\end{tikzpicture}
+\caption[Schema der Triangulation im Joint Display]{Schema der Triangulation. Beide Datenstränge
+werden über den persönlichen Code fallbezogen verknüpft und in konvergente und divergente Befunde
+eingeteilt. Die divergenten Fälle werden in Abschnitt~\ref{sec:selbstauskunft-verhalten}
+ausgewertet.}
+\label{fig:jointdisplay}
+\end{figure}
+
+\section{Gütekriterien}
+\label{sec:guetekriterien}
+Um die Qualität sowohl des quantitativen als auch des qualitativen Vorgehens einzuordnen, werden im
+Folgenden Objektivität, Reliabilität und Validität als die klassischen Gütekriterien empirischer
+Forschung \cite{doeringForschungsmethodenEvaluationSozial2023} für beide Teile der Untersuchung
+betrachtet.
+
+Die \textbf{Objektivität} der qualitativen Inhaltsanalyse wird durch das deduktive, vorab
+festgelegte Kategoriensystem mit expliziten Kodierregeln unterstützt \cite{mayringQualitativeInhaltsanalyse2019}
+(vgl. Abschnitt~\ref{sec:reflexionsstufenmodelle} sowie \hyperref[app:kategoriensystem]{Anhang~A.1}): Jede Reflexionsstufe ist über
+konkrete, am Text prüfbare Merkmale definiert, statt der kodierenden Person einen weiten
+Interpretationsspielraum zu lassen. Für den quantitativen Teil trägt die Standardisierung der
+Fragebogenitems (identischer Wortlaut und identische Skala für beide Gruppen, vgl. \hyperref[app:fragebogen]{Anhang~A.5}) zur
+Durchführungs- und Auswertungsobjektivität bei.
+
+Für die \textbf{Reliabilität} der Kodierung wurde jeder Fall nicht isoliert, sondern anhand mehrerer
+zusammengeführter Rohdatenquellen eingeschätzt: Chatverlauf, eingereichtes Bearbeitungsdokument und,
+wo einschlägig, ein Abgleich der Formulierungen mit anderen Personen, um beispielsweise wortgleiche
+oder erkennbar kopierte Passagen zuverlässig zu identifizieren (vgl.
+Abschnitt~\ref{sec:illustration-kategoriensystem}). Diese Zusammenführung mehrerer Rohdatenquellen
+stützt allerdings primär die Validität der Einordnung und ersetzt keine unabhängige Zweitkodierung:
+Eine Absicherung der Kodierreliabilität durch eine zweite Kodiererin oder einen zweiten Kodierer
+(Intercoder-Reliabilität) wurde im Rahmen dieser Arbeit nicht durchgeführt und ist als Einschränkung
+der Reliabilität zu werten (vgl. Abschnitt~\ref{sec:limitationen}). Für den quantitativen Teil erhöht die
+pseudonyme, selbst administrierte Erhebung über ein Online-Formular die Wahrscheinlichkeit konsistenter, von der
+Anwesenheit einer Untersuchungsperson unbeeinflusster Antworten \cite{doeringForschungsmethodenEvaluationSozial2023}.
+
+Die \textbf{Validität} der Untersuchung stützt sich zum einen auf die inhaltliche Gestaltung der
+Prozessszenarien, die bewusst an realen regulatorischen Rahmenbedingungen (MDR, FERPA) ausgerichtet
+wurden, um eine für Software-Prozessmanagement realistische Entscheidungssituation abzubilden (vgl.
+Abschnitt~\ref{sec:konzeption-szenarien}). Zum anderen erhöht die Triangulation von
+Survey- und Inhaltsanalysedaten im gewählten Mixed-Methods-Design
+(Abschnitt~\ref{sec:mixed-methods-grundlagen}) die Validität der Gesamtinterpretation, da sich
+wahrgenommene und tatsächlich gezeigte Reflexion gegenseitig prüfen lassen, statt sich allein auf
+eine der beiden Perspektiven zu verlassen. Grenzen des gewählten Vorgehens werden in
+Abschnitt~\ref{sec:limitationen} kritisch reflektiert.
+
+\section{Forschungsethik und Datenschutz}
+\label{sec:forschungsethik}
+Die Teilnahme am Mini-Experiment war für alle Studierenden freiwillig und unabhängig von der
+Bewertung der Übung. Vor Beginn der Bearbeitung wurden die Studierenden im Prä-Survey über Zweck und
+Ablauf der Untersuchung informiert und um ihre ausdrückliche Einwilligung zur Teilnahme sowie um die
+Bestätigung der Volljährigkeit gebeten (vgl. Abschnitt~\ref{sec:stichprobe}). Eine Person, die die
+Einwilligung ausdrücklich verneinte, wurde vollständig von der Auswertung ausgeschlossen.
+
+Personenbezogene Klarnamen wurden zu keinem Zeitpunkt erhoben. Stattdessen wählten die Studierenden
+einen selbst gewählten, nicht auf ihre Identität rückführbaren Personal Code, über den Prä- und
+Post-Survey sowie, soweit als Pseudonym auch für den Dokumenten-Upload verwendet, die qualitativ
+kodierten Fälle miteinander verknüpft werden konnten (vgl. Abschnitt~\ref{sec:datenerhebung}). Die
+erhobenen Daten wurden ausschließlich zum Zweck dieser Bachelorarbeit verarbeitet und nicht an
+Dritte weitergegeben, im Einklang mit den Grundsätzen der Datenminimierung und Zweckbindung
+(Art.~5 Abs.~1 lit.~b und c DSGVO) \cite{eu2016dsgvo}.

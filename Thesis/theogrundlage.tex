@@ -1,0 +1,446 @@
+\chapter{Theoretische Grundlagen}
+\label{chap:theogrundlage}
+
+Generative \acrshort{ki}-Systeme sind in kurzer Zeit zu einem festen Bestandteil des Hochschulalltags geworden.
+Wie sie dabei das Lernen konkret beeinflussen, ob sie es fördern oder eher oberflächlich machen,
+ist eine der zentralen Fragen, die diese Arbeit antreiben.
+Im Folgenden werden relevante Forschungsarbeiten zu \gls{ki} in der Lehre, zu dialogbasierten
+Tutorsystemen und zu Reflexions- und Scaffolding-Ansätzen vorgestellt.
+
+% -----------------------------------------------------------------------
+\section{Relevante Technologien und Konzepte}
+\label{sec:relevante-technologien-und-konzepte}
+% -----------------------------------------------------------------------
+
+Der Fokus dieses Abschnitts liegt auf den technischen, konzeptionellen und didaktischen Grundlagen,
+die zum Verständnis des entwickelten Reflexionsbots notwendig sind. Dazu werden sowohl die
+zugrundeliegenden \acrshort{ki}-Technologien als auch die didaktischen Prinzipien erläutert, die in der 
+Gestaltung des Bots eine Rolle spielen.
+
+\subsection{Large Language Models (LLMs)}
+\glspl{llm} sind \acrshort{ki}-Modelle, die auf der Verarbeitung und Generierung
+von natürlicher Sprache spezialisiert sind. Eingabetexte werden dazu zunächst in einzelne Token
+(Wörter oder Wortbestandteile) zerlegt und als numerische Vektoren (Embeddings) dargestellt, die
+semantische Beziehungen zwischen Token abbilden. Verarbeitet werden diese Vektoren durch die
+Transformer-Architektur \cite{vaswaniAttentionAllYou2023}, deren zentraler Bestandteil der
+Self-Attention-Mechanismus ist. Dieser gewichtet für jedes Token, wie stark die übrigen Token der Sequenz
+für dessen Interpretation relevant sind, und erfasst so auch weitreichende Abhängigkeiten im Kontext.
+Trainiert werden die Modelle auf großen Textmengen mit dem Ziel,
+das nächste \acrshort{token} in einer Sequenz möglichst präzise vorherzusagen.
+Aus dieser scheinbar einfachen Aufgabe entstehen durch massive Skalierung von Modellgröße 
+und Trainingsdaten erstaunlich komplexe Fähigkeiten, darunter Übersetzen, Programmieren, 
+Argumentieren und kreatives Schreiben \cite{brownLanguageModelsAre2020, weiEmergentAbilitiesLarge2022}.
+
+Bekannte Vertreter dieser Modellklasse sind \acrshort{gpt}-3 und \acrshort{gpt}-4 von OpenAI sowie LLaMA von Meta \cite{zhaoSurveyLargeLanguageModels2023}.
+Für den Einsatz in dialogbasierten Systemen sind \glspl{llm} besonders geeignet, da sie natürlichsprachliche Eingaben
+verarbeiten, kontextbezogen antworten und mehrstufige Gespräche stimmig fortführen können.
+Diese Eigenschaften sind eine funktionale Voraussetzung für den in dieser Arbeit entwickelten
+Reflexionsbot. Die technische Grundlage im engeren Sinne bildet dagegen das konkret eingesetzte Sprachmodell
+samt Systemarchitektur (vgl. Kapitel~\ref{cha:concept}).
+
+Dass ein Sprachmodell natürlichsprachliche Anweisungen befolgt und sich dialogorientiert verhält,
+ergibt sich allerdings nicht allein aus dem Vortraining auf großen Textmengen. Rein auf die Vorhersage
+des nächsten \acrshort{token} trainierte Modelle setzen Instruktionen häufig noch unzuverlässig um.
+Erst zwei nachgelagerte Trainingsschritte machen sie gezielt steuerbar: Beim instruktionsbasierten
+Finetuning wird ein Modell auf einer Vielzahl in natürlicher Sprache formulierter Aufgaben
+nachtrainiert, wodurch es Anweisungen auch für zuvor ungesehene Aufgabenstellungen deutlich besser
+befolgt \cite{weiFinetunedLanguageModels2022}. Beim anschließenden \acrfull{rlhf} wird das
+Modellverhalten zusätzlich an menschlichen Präferenzurteilen ausgerichtet, sodass Antworten
+hilfreicher, konsistenter und stärker an den gegebenen Instruktionen orientiert ausfallen
+\cite{ouyangTrainingLanguageModels2022}. Diese beiden Schritte sind die Voraussetzung dafür, dass sich
+das Verhalten des eingesetzten Modells überhaupt über eine Systemnachricht
+(Abschnitt~\ref{sec:konzept-reflexionsbot}) in Richtung eines reflexionsfördernden Gesprächspartners
+lenken lässt.
+
+Aufgrund dieser Fähigkeiten finden \glspl{llm} heute in einer Vielzahl von Bereichen Anwendung. Im Alltag werden sie vor allem über Chatbots
+und Assistenzsysteme genutzt, etwa zur Beantwortung von Fragen, zum Verfassen und Zusammenfassen von Texten oder zur Unterstützung bei der Softwareentwicklung durch Codegenerierung \cite{zhaoSurveyLargeLanguageModels2023, garciaSystematicMappingStudy2025}. In Unternehmen kommen \glspl{llm}
+unter anderem im Kundenservice, in der automatisierten Dokumentenanalyse und zunehmend als sogenannte agentenbasierte Systeme zum Einsatz, die mehrstufige
+Aufgaben eigenständig unter Einbindung externer Werkzeuge wie Websuche oder Datenbanken ausführen \cite{yehudaiSurveyEvaluationLLMbased2025}.
+Für den hier verfolgten Einsatz als Reflexionsbot ist dabei weniger die Bandbreite der Anwendungsfelder
+relevant als die Frage, wie zuverlässig sich das Verhalten eines \gls{llm} über die Systemnachricht
+steuern lässt, ein Aspekt, der bei der Konzeption des Bots in Abschnitt~\ref{sec:konzept-reflexionsbot}
+aufgegriffen wird.
+
+\subsection{Chat-Completions-API und Systemnachricht}
+Dialogbasierte Anwendungen greifen üblicherweise über eine Programmierschnittstelle (\acrshort{api}) auf ein \acrfull{llm} zu. Ein verbreitetes Beispiel ist die Chat-Completions-\acrshort{api} von OpenAI \cite{openaiChatCompletionsAPI2024}, über die Anfragen über das HTTP-Protokoll an das Modell gesendet werden. Eine Anfrage besteht aus einer geordneten Liste von Nachrichten, von denen jede einer der Rollen \texttt{system}, \texttt{user} oder \texttt{assistant} zugeordnet ist \cite{openaiChatCompletionsAPI2024}.
+
+Die Rolle \texttt{system} enthält die sogenannte Systemnachricht, die das Verhalten des Modells grundlegend steuert und festlegt, wie es auf Eingaben reagieren soll. Die Rolle \texttt{user} enthält die jeweilige Nutzereingabe, während \texttt{assistant} frühere Modellantworten abbildet, sodass der Gesprächsverlauf kontextuell erhalten bleibt. Der Begriff der Systemnachricht ist für die vorliegende Arbeit zentral, da über sie die didaktische Ausrichtung des Bots festgelegt wird. Die konkrete Wahl der Schnittstelle und die Ausgestaltung der Systemnachricht werden in Kapitel~\ref{cha:concept} beschrieben (Wortlaut siehe \hyperref[app:systemprompt]{Anhang~A.7}).
+
+\subsection{Prompt Engineering}
+Unter Prompt Engineering wird die systematische Gestaltung von Eingaben (Prompts) verstanden,
+mit dem Ziel, das Verhalten eines \gls{llm} gezielt zu steuern, ohne dessen Parameter zu verändern
+\cite{liuPretrainPromptPredict2021}. Da \glspl{llm} stark davon abhängen, wie eine Aufgabe
+formuliert, kontextualisiert und strukturiert wird, kann bereits die Wahl von Formulierung,
+Reihenfolge und Beispielen die Qualität und Richtung der Modellantwort erheblich beeinflussen
+\cite{sahooSystematicSurveyPrompt2025}.
+
+Eine grundlegende Unterscheidung betrifft Zero-Shot- und Few-Shot-Prompting: Bei
+Zero-Shot-Prompting werden keine Beispiele mitgegeben und das Modell antwortet allein auf Basis der
+Instruktion, wobei sich diese Fähigkeit insbesondere durch instruktionsbasiertes Finetuning gezielt
+verbessern lässt \cite{weiFinetunedLanguageModels2022}. Ein Few-Shot-Prompt enthält dagegen
+zusätzlich einige Beispiel-Interaktionen, an denen sich das Modell orientieren kann
+\cite{brownLanguageModelsAre2020}. Für komplexere Aufgaben hat
+sich zudem das sogenannte Chain-of-Thought-Prompting etabliert, bei dem das Modell angeleitet wird,
+seine Antwort in nachvollziehbaren Zwischenschritten herzuleiten, was bei
+mehrstufigen Denkaufgaben die Antwortqualität verbessern kann \cite{weiChainofThoughtPrompting2023}.
+Der Nutzen fällt allerdings je nach Aufgabe und Modell unterschiedlich aus und gilt nicht
+uneingeschränkt.
+
+Neben einzelnen Techniken haben sich strukturierte Prompt-Muster (\emph{Prompt Patterns}) etabliert,
+die wiederkehrende Formulierungsstrategien wie Rollenzuweisungen, Kontextvorgaben oder
+Ausgabeformat-Vorgaben katalogisieren und so die systematische Konstruktion von Prompts
+erleichtern \cite{whitePromptPatternCatalog2023}.
+
+Für den in dieser Arbeit entwickelten Reflexionsbot ist insbesondere die Gestaltung der
+Systemnachricht (vgl. Abschnitt \ref{sec:konzept-reflexionsbot}) von zentraler
+Bedeutung: Durch eine gezielte Rollen- und Verhaltensvorgabe wird das Modell angeleitet, keine
+direkten Lösungen zu liefern, sondern durch gezielte Rückfragen zur Reflexion anzuregen. Konkret
+kombiniert die Systemnachricht des Reflexionsbots (\hyperref[app:systemprompt]{Anhang~A.7}) mehrere der genannten Techniken: eine
+Zero-Shot-Instruktion, die Rolle und Verhalten ohne zusätzliche Modellanpassung vorgibt, ein
+Prompt-Pattern der Rollen- und Verhaltenszuweisung sowie einige Few-Shot-artige Beispielreaktionen,
+die die vier Stufen der adaptiven Tiefe (vgl. Abschnitt~\ref{sec:konzept-reflexionsbot}) illustrieren.
+Chain-of-Thought-Prompting im engeren Sinne wird dagegen nicht eingesetzt, da nicht die Herleitung
+einer Modelllösung, sondern die Rückfrage an die Studierenden im Vordergrund steht. Prompt
+Engineering bildet damit das methodische Werkzeug, mit dem die didaktische Zielsetzung des Bots
+technisch umgesetzt wird.
+
+Die Steuerung über die Systemnachricht ist allerdings nicht beliebig zuverlässig, was für einen
+Reflexionsbot besonders ins Gewicht fällt, dessen didaktische Idee gerade darauf beruht, keine
+direkten Lösungen zu liefern. \glspl{llm} reagieren empfindlich auf kleine Änderungen in Formulierung,
+Reihenfolge oder Kontext, sodass bereits geringfügig veränderte Eingaben die Qualität und Richtung der
+Antwort spürbar verschieben können \cite{sahooSystematicSurveyPrompt2025}. Da die Antwortgenerierung
+zudem probabilistisch erfolgt (vgl. Abschnitt~\ref{sec:relevante-technologien-und-konzepte}), kann
+dieselbe Eingabe zu unterschiedlichen Antworten führen. Eine Systemnachricht legt das Verhalten daher
+nur tendenziell, nicht deterministisch fest. Gezielte Nutzereingaben können das Modell so dazu
+bringen, die im Systemprompt verankerte Rückfrage-Strategie zu unterlaufen und doch eine direkte
+Lösung auszugeben. Robuste, manipulationsresistente Prompt-Muster
+\cite{whitePromptPatternCatalog2023} können solche Umgehungen erschweren, aber nicht vollständig
+ausschließen. Wie Studierende diese Grenze im vorliegenden Mini-Experiment tatsächlich ausnutzten,
+zeigt die Kodierung der Chatverläufe in \hyperref[app:kodierungstabelle]{Anhang~A.2}; die daraus
+folgenden Konsequenzen für die Gestaltung werden in Abschnitt~\ref{sec:handlungsempfehlungen}
+gezogen.
+
+Neben der Steuerbarkeit betrifft eine weitere Grenze die inhaltliche Zuverlässigkeit: \glspl{llm}
+können plausibel formulierte, aber sachlich falsche Aussagen erzeugen (Halluzinationen)
+\cite{jiSurveyHallucinationNatural2023}. Für einen Reflexionsbot, der in seinen Rückfragen auf
+konkrete regulatorische Randbedingungen der Szenarien (etwa MDR oder FERPA) Bezug nimmt, ist dies eine
+relevante Einschränkung, da sachlich falsche Rückfragen die Reflexion in eine falsche Richtung lenken
+könnten.
+
+\subsection{Scaffolding und Sokratisches Fragen}
+\label{sec:ScaffoldingUndSokratischesFragen}
+Scaffolding beschreibt eine didaktische Unterstützungsform, bei der Lernenden zunächst gezielte
+Hilfestellungen angeboten werden, die mit wachsender Kompetenz schrittweise zurückgenommen werden
+\cite{woodRoleTutoringProblem1976, vandepolScaffoldingTeacherStudent2010}. Ziel ist es, Lernende nicht bei jeder Aufgabe
+vollständig anzuleiten, sondern ihnen genau so viel Unterstützung zu geben, wie sie zur
+eigenständigen Bewältigung benötigen, sodass Verantwortung sukzessive auf die Lernenden übergeht.
+Im Kontext von Entscheidungsprozessen zeigt sich zudem, dass die Kombination von
+Entscheidungsstrategien mit Reflexion, sowohl über das Vorgehen anderer als auch, im Sinne
+selbstregulierten Lernens, über das eigene, die Entscheidungskompetenz von Lernenden verbessert. In
+der Variante mit selbstreguliertem Lernen waren die Effekte auch zwei Monate später noch nachweisbar
+\cite{greschEnhancingDecisionMakingSTSE2017}.
+
+Eine konkrete Umsetzungsform von Scaffolding im Dialog ist das sokratische Fragen. Anstatt Wissen
+oder Lösungen direkt zu vermitteln, stellt eine Lehrperson oder ein System gezielte
+Rückfragen, die Lernende dazu anregen, ihre eigenen Annahmen zu hinterfragen, Begründungen zu
+liefern und Konsequenzen ihrer Entscheidungen selbst zu durchdenken. Eine unterrichtsbezogene
+Analyse von Fragestrategien identifiziert sokratisches Fragen als eine von vier Herangehensweisen,
+mit denen Lehrende das Denken von Lernenden stützen, und beschreibt es als Aufforderung, das eigene
+Denken zu artikulieren, statt eine Antwort zu erhalten \cite{chinTeacherQuestioningScience2007}.
+Auf \gls{ki}-gestützte Systeme übertragen wurde dieses Prinzip unter anderem im Kontext der
+Programmierausbildung \cite{karguptaInstructNotAssist2024}.
+Übertragen auf \gls{ki}-gestützte Dialogsysteme bedeutet dies, dass ein Modell nicht als
+Antwortmaschine, sondern als fragenstellendes Gegenüber fungiert, das Lernprozesse anstößt, ohne
+sie durch fertige Lösungen abzukürzen.
+
+Für den in dieser Arbeit entwickelten Reflexionsbot bilden Scaffolding und sokratisches Fragen die
+didaktische Grundlage: Die im Systemprompt verankerte Regel, Unterstützung graduell an die
+Qualität der studentischen Argumentation anzupassen, überträgt das Scaffolding-Prinzip technisch
+in den Reflexionsbot, während die Vorgabe, keine Lösungen zu liefern, sondern Rückfragen zu
+stellen, dem Prinzip des sokratischen Fragens folgt.
+
+\subsection{Reflexion und Reflexionsstufenmodelle}
+\label{sec:reflexionsstufenmodelle}
+Reflexion wird in dieser Arbeit im Anschluss an Hatton und Smith als bewusstes Nachdenken über das
+eigene Handeln mit dem Ziel seiner Verbesserung verstanden
+\cite{hattonSmithReflectionTeacherEducation1995}. Sie unterscheidet sich damit von der bloßen
+Beschreibung oder Wiedergabe eines Sachverhalts, die für sich genommen noch keine Reflexion
+darstellt. Für die vorliegende Arbeit ist dabei entscheidend, dass sich Reflexion nicht
+nur selbst einschätzen, sondern auch anhand von Texten und Gesprächsverläufen von außen beurteilen
+lässt: Nicht jede Aussage, die inhaltlich richtig ist, zeugt bereits von reflektiertem Denken, und
+nicht jede subjektiv als reflektiert empfundene Bearbeitung zeigt sich auch im entstandenen Text
+als solche.
+
+Um diese Beurteilung nachvollziehbar und wiederholbar zu machen, wird in dieser Arbeit das
+Stufenmodell von Hatton und Smith \cite{hattonSmithReflectionTeacherEducation1995} verwendet, das
+ursprünglich zur Bewertung schriftlicher Reflexionen in der Lehramtsausbildung entwickelt wurde.
+Es unterscheidet vier aufeinander aufbauende Stufen: \emph{deskriptives Schreiben} (Descriptive
+Writing), bei dem eine Entscheidung oder ein Sachverhalt lediglich wiedergegeben, aber nicht
+begründet wird; \emph{deskriptive Reflexion} (Descriptive Reflection), bei der eine Entscheidung
+anhand eines einzelnen Kriteriums begründet wird; \emph{dialogische Reflexion} (Dialogic
+Reflection), bei der mehrere Perspektiven oder Optionen explizit gegeneinander abgewogen werden;
+und \emph{kritische Reflexion} (Critical Reflection), bei der die Entscheidung zusätzlich
+in einen größeren regulatorischen, ethischen oder organisationalen Kontext eingeordnet wird. Der
+Vorteil dieses Modells liegt darin, dass es Reflexion nicht als Alles-oder-Nichts-Kategorie
+behandelt, sondern als graduelles Konstrukt, das sich unmittelbar am Text festmachen lässt, ohne
+auf die Selbstauskunft der schreibenden Person angewiesen zu sein.
+
+Für den Reflexionsbot ist dieses Modell in zweifacher Hinsicht zentral: Zum einen bildet die
+adaptive Tiefe seiner Rückfragen (vgl. Abschnitt~\ref{sec:konzept-reflexionsbot}) die
+Grundannahme des Modells technisch nach, indem sie gezielt auf die jeweils nächsthöhere Stufe
+hinlenkt, statt pauschal nachzufragen. Zum anderen dient das Modell als deduktives
+Kategoriensystem für die spätere qualitative Inhaltsanalyse der entstandenen Bearbeitungen
+(Abschnitt~\ref{sec:datenanalyse}), ergänzt um eine zusätzliche Stufe zur Erfassung fehlender
+Eigenreflexion (Vermeidung, Aufgabenverweigerung). Ob ein Text von der KI stammt, wird davon
+getrennt über die Dimension Autorenschaft erfasst (vgl. \hyperref[app:kategoriensystem]{Anhang~A.1}).
+
+\subsection{Mixed-Methods-Forschungsdesign}
+\label{sec:mixed-methods-grundlagen}
+Da weder rein quantitative noch rein qualitative Verfahren allein ausreichen, um sowohl die
+wahrgenommene als auch die tatsächlich gezeigte Wirkung eines Lernwerkzeugs zu erfassen, kombinieren
+Mixed-Methods-Designs beide Herangehensweisen gezielt miteinander \cite{kuckartzMixedMethodsMethodologie2014, creswellDesigningConductingMixed2018}.
+Quantitative Befragungsdaten liefern ein breites, über viele Personen vergleichbares Bild
+subjektiv wahrgenommener Effekte, sind jedoch anfällig für Verzerrungen durch soziale Erwünschtheit
+oder eine ungenaue Selbsteinschätzung \cite{doeringForschungsmethodenEvaluationSozial2023}. Qualitative Verfahren wie die Inhaltsanalyse erlauben
+demgegenüber eine differenzierte, am tatsächlichen Material ansetzende Beurteilung, sind dafür aber
+aufwendiger und schwerer verallgemeinerbar. Beim sogenannten konvergenten Parallel-Design werden
+beide Datenarten unabhängig voneinander erhoben und erst nachträglich zusammengeführt, um
+Übereinstimmungen und Widersprüche zwischen wahrgenommener und tatsächlicher
+Wirkung sichtbar zu machen \cite{kuckartzMixedMethodsMethodologie2014, creswellDesigningConductingMixed2018}.
+Creswell und Plano Clark bezeichnen dieses Design in der dritten Auflage nur noch als
+\emph{convergent design} und grenzen es ausdrücklich vom Triangulationsbegriff der qualitativen
+Forschung ab \cite{creswellDesigningConductingMixed2018}. Die vorliegende Arbeit folgt in der
+deutschen Begriffsverwendung Kuckartz, versteht das Zusammenführen aber im Sinne beider Quellen als
+Vergleich der beiden Ergebnisstränge und nicht als wechselseitige Absicherung eines einzelnen
+Befundes.
+
+Für die vorliegende Arbeit ist dieser Abgleich von besonderer Bedeutung, weil sich wahrgenommene und
+tatsächlich gezeigte Reflexion grundsätzlich unterscheiden können: Eine Selbsteinschätzung im
+Fragebogen bildet nicht zwangsläufig ab, wie tief eine Bearbeitung tatsächlich ausfällt. Ein rein
+quantitatives Vorgehen könnte einen solchen Unterschied nicht aufdecken. Das Mixed-Methods-Design
+schafft daher erst die methodische Voraussetzung, wahrgenommene und dokumentierte Reflexion
+gegeneinander zu prüfen. Die konkrete Umsetzung dieses Designs für das vorliegende Mini-Experiment
+wird in Abschnitt~\ref{sec:forschungsdesign} beschrieben.
+
+% -----------------------------------------------------------------------
+\section{Stand der Technik}
+\label{sec:standtechnik}
+% -----------------------------------------------------------------------
+
+Der Einsatz von KI in der Hochschullehre ist kein Randthema mehr.
+Im Folgenden werden zentrale Arbeiten und bestehende Ansätze vorgestellt, die für
+diese Arbeit relevant sind, von generischen \acrshort{ki}-Systemen bis hin zu spezialisierten
+Reflexions- und Scaffolding-Werkzeugen.
+
+\subsection{Generative KI in der Hochschullehre}
+
+Generative \acrshort{ki}-Systeme wie ChatGPT haben in kurzer Zeit einen breiten Einzug in die
+Hochschullehre gehalten \cite{kasneciChatGPTGoodOpportunities2023}.
+Sie bieten Potenziale für individualisiertes Lernen, direkte Rückmeldungen und eine
+Anpassung an den jeweiligen Lernstand \cite{baidoo-anuEducationEraGenerative2023}.
+Gleichzeitig stellen sie die akademische Integrität vor ernsthafte Fragen, da Studierende
+Antworten einfach übernehmen könnten, ohne eigenes Nachdenken \cite{cottonChattingCheatingEnsuring2024, nikolicChatGPTCopilotGemini2024}.
+
+In der Literatur wird argumentiert, dass ein unkontrollierter Einsatz von GenAI oberflächliches
+Lernen begünstigt, wenn keine didaktische Rahmung vorhanden ist \cite{chanComprehensiveAIPolicy2023, hallGenerativeAIReweaving2024, limGenerativeAIFuture2023}.
+Eine Befragung von Studierenden in Deutschland zeigt ein zwiespältiges Bild: Die Mehrheit nutzt
+\acrshort{ki}-Werkzeuge im Studium, steht ihnen zugleich aber kritisch gegenüber, insbesondere wegen
+ihrer Fehleranfälligkeit und des Risikos, von ihnen abhängig zu werden. Unterstützung durch die
+eigene Hochschule erleben die Befragten dabei nur selten; Schulungsangebote oder eine Integration in
+die Lehre werden seltener berichtet als bloße Nutzungsrichtlinien
+\cite{marczukKuenstlicheIntelligenzStudienalltag2025}. Eine qualitative Analyse von
+Anwendungsfällen an deutschsprachigen Hochschulen weist in dieselbe Richtung, dass der Einsatz bislang
+überwiegend von Einzelinitiativen getragen wird und die Bedingungen für eine gelingende didaktische
+Einbettung erst ansatzweise geklärt sind \cite{wannemacherWieKIStudium2025}.
+Daraus ergibt sich der Bedarf an \acrshort{ki}-Systemen, die nicht einfach Lösungen liefern,
+sondern Lernprozesse aktiv begleiten \cite{francisGenerativeAIHigher2025}. Metaanalysen bestätigen
+insgesamt einen moderat positiven Effekt generativer \acrshort{ki} auf Lernergebnisse
+\cite{wuChatGPTImpactStudent2026}. Eine Metaanalyse zu Chatbots im Lernkontext, die 28 Berichte mit
+31 Effektstärken auswertet, ermittelt einen mittleren Effekt von $g = 0{,}48$, findet zugleich aber,
+dass die höchsten Effektstärken dort auftreten, wo die Vergleichsgruppe gar keine Unterstützung
+erhielt, wo die Intervention nur eine einzige Sitzung umfasste und wo die Chatbots aufgabenfokussiert
+arbeiteten \cite{alemdagEffectChatbotsLearning2023}. Dieses Moderatormuster verweist eher auf
+Designartefakte der Untersuchungsanlage als auf tiefere Lernwirkungen und mahnt zur Vorsicht bei der
+Interpretation kurzer Einzelinterventionen, wie sie auch der vorliegenden Arbeit zugrunde liegt. Die
+noch junge Forschungslage ist insgesamt konzeptionell uneinheitlich
+\cite{mcgrathGenerativeAIChatbots2024}.
+
+\newpage
+\subsection{Chatbots und KI-Tutoren im Bildungsbereich}
+
+Dialogbasierte \acrshort{ki}-Systeme werden zunehmend als tutorielle Begleitung genutzt \cite{labadzeRoleAIChatbots2023}.
+Eine Übersicht zu Chatbots in der Programmierlehre zeigt, dass solche Systeme kurze Erklärungen,
+prozessnahe Hilfen und schrittweise Anleitungen bereitstellen können \cite{garciaSystematicMappingStudy2025}.
+Ein aktueller systematischer Überblick ordnet Chatbots, generative Werkzeuge und Tutorsysteme in der
+Programmierausbildung ein \cite{elnaffarTeachingAISystematic2025}.
+Gerade im Bereich Software Engineering gibt es erste Erfahrungsberichte, die KI-Tutoren
+als ergänzende Lernunterstützung erprobt haben \cite{frankfordAITutoringSoftwareEngineering2024, happeExperienceReportPedagogically2025, sengulSoftwareEngineeringEducation2024, feinAIDrivenSoftwareDevelopment2026}.
+
+Diese Ansätze verbindet, dass \gls{ki} nicht als reine Antwortmaschine verstanden wird, sondern
+als lernunterstützendes Dialogsystem.
+Der Unterschied liegt im Grad der Spezialisierung: Generische Systeme sind zwar breit
+einsetzbar, liefern aber oft direkte Antworten statt gezielte Lernimpulse.
+Spezialisierte Systeme greifen stärker in die Gesprächsstruktur ein und lenken
+auf Begründung, Abwägung und Perspektivwechsel. Erste Analysen des tatsächlichen Interaktionsverlaufs
+deuten zudem darauf hin, dass weniger das System allein als die Struktur der
+Studierenden-Chatbot-Interaktion mit dem Lerngewinn zusammenhängt \cite{khorDecodingStudentChatbot2026}.
+
+\subsection{Reflexion und Scaffolding-Ansätze}
+Aufbauend auf dem Scaffolding-Prinzip und dem sokratischen Fragen (vgl. Abschnitt
+\ref{sec:ScaffoldingUndSokratischesFragen}) zeigen Prompt-Sammlungen wie
+\glqq Reflect Me\grqq{}, wie textgenerative KI didaktisch als Reflexionsanstoß gerahmt werden kann
+\cite{mollerReflectMeTextgenerative2025}. Dabei handelt es sich um ein Praxis-Workbook mit
+vorformulierten Reflexionsprompts, nicht um ein empirisch evaluiertes System. Eine Wirksamkeitsprüfung
+steht dort ebenso aus wie eine Antwort auf die Frage, wann solche Impulse tatsächlich zu tieferer
+Reflexion führen und welche Fragetypen dabei wirksam sind. Genau an dieser Stelle setzt die
+vorliegende Arbeit an, indem sie ein kontextspezifisches Reflexionswerkzeug nicht nur entwirft,
+sondern im Lehrbetrieb gegen eine Vergleichsbedingung erprobt.
+
+Mehrere aktuelle Studien vergleichen inzwischen gezielt gestaltete, zurückhaltende Lernsysteme mit
+generischen, direkt antwortenden \acrshort{ki}-Systemen. In einem dreiarmigen randomisierten
+Experiment in der Programmierausbildung wurde ein scaffoldender Tutor, der vollständige Lösungen
+bewusst zurückhält, gegen ein unbeschränktes ChatGPT und eine Kontrollgruppe ohne \acrshort{ki}
+verglichen. Beide \acrshort{ki}-Bedingungen steigerten zwar die unmittelbare Aufgabenleistung, die
+Ergebnisse deuten aber auf eine Entkopplung von kurzfristiger Leistung und tatsächlichem Lernen hin
+\cite{bassnerLessStressBetter2026}. Ein weiterer Beitrag derselben Arbeitsgruppe stellt einen
+kontextbewussten \acrshort{ki}-Tutor einem generischen \acrshort{ki}-Chatbot gegenüber
+\cite{bassnerTowardsUnderstandingImpact2025}. Für die Hochschullehre liegt mit der Studie von Xi et
+al. der bislang engste Vergleich zur vorliegenden Arbeit vor. Über sechs Wochen bearbeiteten 94
+zufällig zugeteilte Studierende ein gemeinsames Forschungsdesign, wobei die eine Gruppe einen
+sokratisch fragenden, die andere einen bewusst direkt antwortenden Dialogagenten nutzte. Die
+sokratische Bedingung schnitt sowohl in der fachlichen Leistung als auch im reflexiven Denken
+besser ab, insbesondere in den Dimensionen \emph{reflection} und \emph{critical reflection}
+\cite{xiInvestigatingEffectsLLMbased2026}. Ergänzend erhebt eine Befragung von 230 Studierenden
+mit anschließenden Interviews, wie sokratisches \acrshort{ki}-Tutoring im Vergleich zu menschlichen
+Tutoren \emph{wahrgenommen} wird; eine Aufgabenbearbeitung wurde dort nicht untersucht
+\cite{fakourSocraticWisdomAge2025}. Im schulischen Bereich vergleicht ein randomisiertes
+kontrolliertes Experiment mit 90 Lernenden der zehnten Klasse eine \acrshort{ki}-gestützte
+Argumentationsübung mit derselben Übung ohne \acrshort{ki} sowie mit einer Kontrollgruppe. Die
+\acrshort{ki}-Gruppe verbesserte sich stärker in wissenschaftlicher Argumentation und kritischem
+Denken, während sich für die metakognitive Selbstregulation kein Effekt zeigte; die Arbeit liegt
+bislang nur als Preprint vor \cite{kaoSocraticAIK122025}.
+
+Zugleich benennt die Literatur Grenzen solcher Ansätze: Scaffolding-Tutoren zeigen eine Lücke zwischen
+Benchmark-Leistung und realem Einsatzverhalten \cite{neaguRethinkingScaffoldingLLM2026}, müheloser
+\acrshort{ki}-Einsatz kann eine \glqq Illusion des Lernens\grqq{} erzeugen, obwohl gerade die produktive
+Anstrengung den Lernwert ausmacht \cite{brcicEffortlessTrapProductive2026}, und die ungeprüfte Übernahme
+von Chatbot-Antworten lässt sich als eigenständiges Analyseproblem der Overreliance fassen
+\cite{jinRelianceScopeAnalyticalFramework2026}. Auch für anspruchsvollere, offenere Aufgaben wie
+mathematische Beweise zeigt sich, dass generative \acrshort{ki} allein nicht ausreicht, sondern eine
+gezielte didaktische Unterstützung erfordert \cite{chenGenerativeAIAlone2025}.
+
+
+\subsection{Vergleich und Einordnung}
+
+Die drei vorangegangenen Abschnitte lassen sich zu drei Forschungssträngen bündeln. Arbeiten zu
+generativer \acrshort{ki} in der Lehre begründen den Bedarf an didaktisch kontrollierter Nutzung,
+Arbeiten zu Chatbots und \acrshort{ki}-Tutoren zeigen, dass dialogische Systeme Lernende überhaupt
+begleiten können, und Arbeiten zu Reflexion und Scaffolding liefern das didaktische Prinzip, nach dem
+ein solches System nicht lösen, sondern anregen soll. Für die Verortung der vorliegenden Arbeit ist
+jedoch weniger diese thematische Gliederung entscheidend als die Frage, in welchen
+Untersuchungskontexten der Vergleich zwischen zurückhaltenden und direkt antwortenden Systemen
+bislang durchgeführt wurde. Tabelle~\ref{tab:literaturvergleich} stellt die einschlägigen Arbeiten
+gegenüber.
+
+\newpage
+\begingroup
+\small
+\setlength{\tabcolsep}{6pt}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.08\textwidth}
+                  >{\raggedright\arraybackslash}p{0.19\textwidth}
+                  >{\raggedright\arraybackslash}p{0.32\textwidth}
+                  >{\raggedright\arraybackslash}p{0.29\textwidth}}
+\caption{Einschlägige Vergleichsstudien, gruppiert nach Art der Aufgabe}
+\label{tab:literaturvergleich} \\
+\toprule
+\textbf{Quelle} & \textbf{Domäne} & \textbf{Design und Vergleichsbedingung} &
+\textbf{Zentrales Ergebnis} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Quelle} & \textbf{Domäne} & \textbf{Design und Vergleichsbedingung} &
+\textbf{Zentrales Ergebnis} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{4}{@{}l}{\textit{Aufgaben mit eindeutig richtiger Lösung}} \\
+\midrule
+\cite{karguptaInstructNotAssist2024} & Programmierung (Debugging) &
+Sokratischer Fragebaum, Systemevaluation &
+Sokratisches Nachfragen stützt eigenständige Fehlersuche \\
+\midrule
+\cite{bassnerLessStressBetter2026} & Programmier\-ausbildung &
+Randomisiert, drei Arme: scaffoldender Tutor, freies ChatGPT, ohne KI &
+Beide KI-Arme steigern die unmittelbare Leistung; Hinweise auf Entkopplung von Leistung und
+Lernen \\
+\midrule
+\cite{bassnerTowardsUnderstandingImpact2025} & Programmier\-ausbildung &
+Kontextbewusster KI-Tutor gegenüber generischem Chatbot &
+Vergleich spezialisierter und generischer Systeme \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Offene Aufgaben ohne eindeutig richtige Lösung}} \\
+\midrule
+\cite{xiInvestigatingEffectsLLMbased2026} & Hochschullehre (Forschungs\-methodik) &
+Randomisiert, n=94, sechs Wochen: sokratischer gegenüber eigens gebautem, direkt antwortendem
+Agenten &
+Sokratische Gruppe besser bei Leistung und reflexivem Denken \\
+\midrule
+\cite{kaoSocraticAIK122025} & Schulunterricht (Natur\-wissenschaften) &
+Randomisiert, n=90, drei Arme: Argumentation mit KI, ohne KI, Kontrolle &
+KI-Gruppe besser bei Argumentation und kritischem Denken; Selbstregulation ohne Effekt \\
+\midrule
+\cite{mollerReflectMeTextgenerative2025} & domänenoffen &
+Prompt-Workbook ohne Wirksamkeitsprüfung &
+Zeigt die didaktische Rahmung, ohne sie zu evaluieren \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Ohne eigene Aufgabenbearbeitung}} \\
+\midrule
+\cite{fakourSocraticWisdomAge2025} & Hochschullehre (fächer\-übergreifend) &
+Befragung, n=230, plus 23 Interviews &
+Studentische Wahrnehmung von ChatGPT gegenüber menschlichen Tutoren \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Vorliegende Arbeit}} \\
+\midrule
+-- & \textbf{Software-Prozess\-management} &
+\textbf{Mini-Experiment: Reflexionsbot gegenüber frei gewähltem Consumer-System} &
+\textbf{Offene Prozessentscheidungen, zusätzlich Erhebung der Autorenschaft} \\
+\end{longtable}
+\endgroup
+
+Die Gruppierung danach, ob die untersuchten Aufgaben eine objektiv richtige Lösung besitzen, beruht
+auf der in der jeweiligen Arbeit berichteten Aufgabenstellung und ist eine Einordnung des Verfassers.
+
+Aus der Übersicht ergibt sich ein differenzierteres Bild, als die bloße Neuheit des Themas nahelegt.
+Ein Teil der Arbeiten prüft zurückhaltende gegen direkt antwortende Systeme in Domänen mit eindeutig
+richtiger Lösung, vor allem in der Programmierausbildung. Das ist naheliegend, weil eine eindeutige
+Lösung ein einfaches Erfolgsmaß erlaubt. Zwei Arbeiten untersuchen jedoch bereits offene Aufgaben.
+Kao et al. \cite{kaoSocraticAIK122025} setzen sokratische \acrshort{ki} in der
+naturwissenschaftlichen Argumentation ein und finden Vorteile gegenüber Unterricht ohne
+\acrshort{ki}. Xi et al. \cite{xiInvestigatingEffectsLLMbased2026} vergleichen über sechs Wochen
+einen sokratischen mit einem direkt antwortenden Dialogagenten bei der Erstellung eines
+Forschungsdesigns und berichten Vorteile der sokratischen Bedingung sowohl in der Leistung als auch
+im reflexiven Denken. Die Annahme, ein solcher Vergleich sei bei offenen Aufgaben bislang gar nicht
+angestellt worden, wäre demnach unzutreffend.
+
+Drei Unterschiede zur vorliegenden Arbeit bleiben gleichwohl bestehen. Erstens ist die
+Vergleichsbedingung eine andere. Xi et al. stellen ihrem System einen \emph{eigens für die Studie
+gebauten} nicht-sokratischen Agenten gegenüber und weisen ausdrücklich darauf hin, dass dieser nicht
+für nicht-sokratische Systeme im Allgemeinen steht. Die vorliegende Arbeit vergleicht dagegen mit
+den frei gewählten Consumer-Systemen, die Studierende ohnehin verwenden, und misst damit den
+Abstand zur tatsächlichen Alltagspraxis statt zu einer Laborbedingung. Zweitens erfasst keine der
+genannten Arbeiten, \emph{ob die eingereichten Texte überhaupt von den Studierenden stammen}. Genau
+diese Dimension der Autorenschaft erweist sich in der vorliegenden Untersuchung als der Befund mit
+der größten praktischen Tragweite (vgl. Kapitel~\ref{cha:ergebnisse}). Drittens unterscheidet sich
+der Umfang der Intervention erheblich: sechs Wochen mit wöchentlichen Sitzungen bei Xi et al.
+gegenüber einer einzelnen Übungseinheit hier, was bei der späteren Einordnung der Befunde zu
+berücksichtigen ist (vgl. Abschnitt~\ref{sec:einordnung-forschungsstand}).
+
+Für das Software-Prozessmanagement liegt zudem bislang keine vergleichende Untersuchung vor. Ebenso
+bleibt offen, unter welchen Bedingungen \acrshort{ki}-gestützte Dialoge wirklich zu tieferer
+Reflexion führen und welche Fragetypen dabei am meisten helfen.
+Genau hier setzt diese Arbeit an.
+Der entwickelte Reflexionsbot ist technisch schlank, aber didaktisch gezielt: Er liefert keine
+Lösungen, sondern stellt Rückfragen und lenkt Studierende dazu, ihre Prozessentscheidungen
+selbst zu begründen.
+

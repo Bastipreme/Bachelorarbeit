@@ -1,0 +1,422 @@
+\chapter{Konzeptionierung}
+\label{cha:concept}
+
+Während Kapitel~\ref{cha:methodik} den Rahmen festlegt, in dem der Vergleich beider Systeme
+untersucht wird, beschreibt dieses Kapitel den Untersuchungsgegenstand selbst. Der Reflexionsbot ist
+kein vorgefundenes System, sondern wurde für diese Arbeit eigens entwickelt. Seine Gestaltung ist
+damit nicht bloß technische Vorarbeit, sondern der eigentliche didaktische Eingriff, dessen Wirkung
+anschließend untersucht wird. Sie wird hier so dokumentiert, dass sich die getroffenen
+Entscheidungen nachvollziehen und der Bot reproduzieren lässt.
+
+Das Kapitel gliedert sich in vier Abschnitte. Zunächst werden die funktionalen und
+nicht-funktionalen Anforderungen aus Zielsetzung und Forschungsfrage abgeleitet
+(Abschnitt~\ref{sec:anforderungen}). Darauf aufbauend beschreibt
+Abschnitt~\ref{sec:konzept-reflexionsbot} das didaktische Konzept des Bots, insbesondere das Prinzip
+der adaptiven Tiefe seiner Rückfragen. Abschnitt~\ref{sec:konzeption-szenarien} stellt die Gestaltung
+der beiden Prozessszenarien dar, die für beide Gruppen die identische Aufgabengrundlage bilden.
+Abschnitt~\ref{sec:technische-umsetzung} dokumentiert abschließend die technische Umsetzung von der
+Auswahl des Frontend-Frameworks bis zur Anbindung des Sprachmodells.
+
+\section{Anforderungen an das System}
+\label{sec:anforderungen}
+
+Aus der in Kapitel~\ref{chap:einleitung} formulierten Zielsetzung sowie der in
+Abschnitt~\ref{sec:forschungsfrage} formulierten Forschungsfrage lassen sich funktionale und
+nicht-funktionale Anforderungen an den zu entwickelnden Reflexionsbot ableiten.
+
+Funktional muss der Bot erstens auf direkte Lösungen verzichten und stattdessen durch Rückfragen
+zur eigenen Argumentation der Studierenden anregen, da genau dieser Verzicht den Kern der
+Forschungsfrage bildet. Zweitens muss sich die Tiefe dieser Rückfragen adaptiv an die Qualität der
+studentischen Argumentation anpassen, damit weder oberflächliche Antworten unkommentiert bleiben
+noch bereits durchdachte Antworten unnötig verzögert werden. Drittens muss der Bot beide
+Prozessszenarien (SmartDose, LearnLoop, vgl. Abschnitt~\ref{sec:konzeption-szenarien}) kennen und
+inhaltlich referenzieren können, ohne sie beim Namen zu nennen, damit Studierende nicht anhand der
+Szenario-Bezeichnung nachschlagen, statt selbst zu argumentieren. Viertens müssen Studierende
+mehrere Chat-Sitzungen parallel führen und wechseln können, und fünftens müssen die
+Gesprächsverläufe für die spätere qualitative Auswertung exportierbar sein.
+
+Nicht-funktional muss der Bot ohne lokale Installation zugänglich sein, damit er im Rahmen einer
+regulären Übung ohne technische Vorbereitung genutzt werden kann. Die Nutzung muss pseudonym erfolgen,
+sodass kein Klarname, sondern nur ein selbst gewählter Personal Code erforderlich ist (vgl.
+Abschnitt~\ref{sec:datenerhebung}). Bei der Modellwahl war zudem auf ein angemessenes Verhältnis
+von Antwortqualität und Kosten zu achten, da mehrere Studierende die Anwendung gleichzeitig während
+der Übung nutzen sollten. Schließlich sollten Antworten möglichst unmittelbar sichtbar werden, um
+den Gesprächsfluss nicht durch Wartezeiten zu unterbrechen.
+
+Tabelle~\ref{tab:anforderungen} fasst die Anforderungen zusammen und weist jeder Anforderung aus,
+worauf sie zurückgeht. Die Zuordnung macht sichtbar, dass die funktionalen Anforderungen FA1 bis FA3
+unmittelbar aus den Teilfragen folgen und damit die Untersuchungsbedingung selbst herstellen, während
+FA4 und FA5 sowie die nicht-funktionalen Anforderungen den Erhebungs- und Durchführungsrahmen
+absichern. Diese Unterscheidung ist für die Bewertung der Umsetzung wesentlich: Ein Fehler in FA1
+oder FA2 gefährdet die Gültigkeit des Vergleichs, ein Fehler in NFA3 lediglich den Komfort.
+
+\begin{table}[!t]
+\centering
+\caption{Funktionale und nicht-funktionale Anforderungen an den Reflexionsbot}
+\label{tab:anforderungen}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.07\textwidth}
+                >{\raggedright\arraybackslash}p{0.43\textwidth}
+                >{\raggedright\arraybackslash}p{0.30\textwidth}}
+\toprule
+\textbf{Nr.} & \textbf{Anforderung} & \textbf{Begründet durch} \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Funktionale Anforderungen}} \\
+\midrule
+FA1 & Verzicht auf direkte Lösungen, stattdessen Rückfragen zur eigenen Argumentation &
+TF1, Kern der Vergleichs\-bedingung \\
+\midrule
+FA2 & Adaptive Tiefe der Rückfragen, abhängig von der Qualität der studentischen Antwort &
+TF2, Scaffolding-Prinzip \\
+\midrule
+FA3 & Kenntnis beider Szenarien, ohne sie beim Namen zu nennen &
+TF2, verhindert Nachschlagen statt Argumentieren \\
+\midrule
+FA4 & Mehrere parallele Chat-Sitzungen mit Wechselmöglichkeit &
+Durchführung, zwei Szenarien je Person \\
+\midrule
+FA5 & Exportierbarkeit der Gesprächsverläufe &
+Datengrundlage der qualitativen Kodierung \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Nicht-funktionale Anforderungen}} \\
+\midrule
+NFA1 & Zugänglich ohne lokale Installation &
+Einsatz in regulärer Übung ohne Vorbereitung \\
+\midrule
+NFA2 & Pseudonyme Nutzung über selbst gewählten Personal Code &
+Forschungsethik, Prä-Post-Verknüpfung \\
+\midrule
+NFA3 & Angemessenes Verhältnis von Antwortqualität und Kosten &
+Gleichzeitige Nutzung durch mehrere Studierende \\
+\midrule
+NFA4 & Unmittelbar sichtbare Antworten &
+Erhalt des Gesprächsflusses \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Konzept des Reflexionsbots}
+\label{sec:konzept-reflexionsbot}
+
+Der entwickelte Reflexionsbot ist kein generisches Frage-Antwort-System. Er ist ein
+spezialisierter Reflexionscoach, der Studierende bei der Bearbeitung von zwei
+Szenarien zur Prozessmodellierung aus dem Software Engineering begleitet. Die
+Szenarien bilden realistische Entscheidungssituationen ab, etwa Rollen-, Daten- und
+Zeitplanentscheidungen in einem regulierten ML-Projekt sowie Architektur- und
+Kommunikationsentscheidungen in einem verteilten Team, und dienen als fester
+Kontext, auf den sich alle Rückfragen des Bots beziehen (vollständige
+Szenariobeschreibungen siehe \hyperref[app:szenarien]{Anhang~A.4}).
+
+Im Zentrum des Konzepts steht das in Abschnitt~\ref{sec:relevante-technologien-und-konzepte}
+eingeführte Prinzip von Scaffolding und sokratischem Fragen: Der Bot liefert keine
+fertigen Lösungen, sondern stellt gezielte Rückfragen, die Studierende zur Begründung
+und Reflexion ihrer eigenen Prozessentscheidungen anregen. Damit unterscheidet er sich
+bewusst von einem generischen \acrshort{ki}-System, das eine Frage typischerweise direkt
+beantworten würde. Genau dieser Unterschied bildet den Kern der Forschungsfrage dieser
+Arbeit.
+
+Ein zentrales Gestaltungsmerkmal ist die \emph{adaptive Tiefe} der Bot-Antworten. Die
+Ausführlichkeit und Qualität der Rückmeldung skaliert mit der Qualität der studentischen
+Argumentation, wie Abbildung~\ref{fig:adaptive-tiefe} zusammenfasst.
+
+\begin{itemize}
+    \item \textbf{Vage Antwort} (z.\,B. Nennung einer Option ohne Begründung): Der Bot
+        stellt genau eine kurze, gezielte Rückfrage, um die Begründung herauszuarbeiten.
+    \item \textbf{Teilweise Begründung} (Studierende nennen eine Entscheidung mit einer
+        Begründung, lassen aber Risiken oder Randbedingungen aus): Der Bot bestätigt kurz
+        den richtigen Teil und stellt ein bis zwei fokussierte Rückfragen zu den fehlenden
+        Aspekten.
+    \item \textbf{Starke Argumentation} (Abwägungen, Randbedingungen, Konsequenzen werden
+        benannt): Der Bot bestätigt den stärksten Punkt explizit, ergänzt eine Perspektive,
+        die nicht genannt wurde, und stellt eine weiterführende Frage.
+    \item \textbf{Herausragende Antwort} (mehrperspektivische Abwägung, konkrete
+        Randbedingungen, Folgeeffekte werden antizipiert): Der Bot begegnet den
+        Studierenden auf Augenhöhe, benennt das stärkste Gegenargument und stellt eine
+        Frage, die die Kernannahme herausfordert.
+\end{itemize}
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[
+	start/.style={rectangle, draw=black!55, fill=black!7, rounded corners, align=center,
+	              text width=5.4cm, minimum height=0.8cm, font=\small},
+	stufe/.style={rectangle, draw=codeblue, rounded corners, align=left, anchor=north,
+	              text width=3.05cm, minimum height=3.1cm, font=\scriptsize, inner sep=5pt},
+	arr/.style={-{Latex[length=1.8mm]}, draw=black!65}
+	]
+\node[start] (ant) at (0,0) {Studentische Antwort};
+
+\node[stufe, fill=codeblue!6]  (s1) at (-5.55,-1.45)
+  {\textbf{Vage Antwort}\\[1pt] Option ohne Begründung\\[5pt]
+   $\rightarrow$ genau \emph{eine} kurze, gezielte Rückfrage};
+\node[stufe, fill=codeblue!16] (s2) at (-1.85,-1.45)
+  {\textbf{Teilweise Begründung}\\[1pt] Risiken und Randbedingungen fehlen\\[5pt]
+   $\rightarrow$ kurze Bestätigung und ein bis zwei fokussierte Rückfragen};
+\node[stufe, fill=codeblue!28] (s3) at (1.85,-1.45)
+  {\textbf{Starke Argumentation}\\[1pt] Abwägungen und Konsequenzen benannt\\[5pt]
+   $\rightarrow$ stärksten Punkt bestätigen, Perspektive ergänzen, weiterführende Frage};
+\node[stufe, fill=codeblue!42] (s4) at (5.55,-1.45)
+  {\textbf{Herausragende Antwort}\\[1pt] mehrperspektivisch, Folgeeffekte antizipiert\\[5pt]
+   $\rightarrow$ auf Augenhöhe, stärkstes Gegenargument, Kernannahme hinterfragen};
+
+\foreach \n in {s1,s2,s3,s4} \draw[arr] (ant.south) -- (\n.north);
+\end{tikzpicture}
+\caption[Adaptive Tiefe der Bot-Antworten]{Adaptive Tiefe der Bot-Antworten. Mit steigender Qualität
+der studentischen Argumentation nimmt die Ausführlichkeit der Rückmeldung zu (zunehmend dunklere
+Färbung), während bei einer vagen Antwort bewusst nur eine einzelne Rückfrage erfolgt.}
+\label{fig:adaptive-tiefe}
+\end{figure}
+
+Diese gestufte Unterstützung setzt das Scaffolding-Prinzip technisch um: Hilfestellung
+wird nicht pauschal gewährt, sondern in Abhängigkeit vom gezeigten Kompetenzniveau
+zurückgenommen, sobald Studierende eigenständiger argumentieren. Zusätzlich fokussiert
+der Bot pro Gesprächsrunde jeweils eine logische Schwachstelle (z.\,B. zunächst Risiko,
+danach Rollen und Stakeholder, dann Abhängigkeiten, dann Zeitplanrealismus), sodass sich
+die Reflexion schrittweise vertieft, statt alle Schwächen gleichzeitig zu adressieren.
+Um zu verhindern, dass Studierende Antworten anhand der Szenario-Bezeichnung erraten
+oder nachschlagen, statt selbst zu argumentieren, nennt der Bot die Szenarien in seinen
+Antworten nie explizit beim Namen.
+
+Schließlich antwortet der Bot durchgängig auf Englisch, unabhängig davon, in welcher Sprache die
+Studierenden schreiben. Hintergrund ist, dass die Lehrveranstaltung \glqq Grundlagen des Software
+Engineering 1\grqq{} auch internationale Studierende umfasste. Eine einheitlich englische
+Kommunikation stellte sicher, dass auch diese Teilnehmenden eingebunden waren und die Rückfragen des
+Bots verstehen konnten. Aus demselben Grund wurden die Aufgabenblätter (\hyperref[app:szenarien]{Anhang~A.4}) und die
+Fragebögen (\hyperref[app:fragebogen]{Anhang~A.5}) auf Englisch ausgegeben.
+
+Abbildung~\ref{fig:reflexionsbot-ui} zeigt die Oberfläche des Reflexionsbots anhand eines
+beispielhaften Gesprächsverlaufs zur Datensatzentscheidung aus dem Szenario SmartDose. Über die
+Seitenleiste lassen sich mehrere Chats parallel anlegen und der Gesprächsverlauf als Textdatei
+herunterladen, während das Eingabefeld im Hauptbereich für die Kommunikation mit dem Bot genutzt
+wird. Der Verlauf veranschaulicht zugleich die adaptive Tiefe. Auf die einleitende Frage nach der zu
+wählenden Option antwortet der Bot nicht mit einer Empfehlung, sondern mit einer einzelnen gezielten
+Rückfrage nach den Risiken. Auf die knappe Antwort \glqq Maybe we could get into legal trouble\grqq{}
+folgt eine kurze Bestätigung und eine fokussierte Nachfrage zur nicht gewählten Option. Erst als die
+studentische Antwort Zulassungsfähigkeit und Modellqualität explizit gegeneinander abwägt, bestätigt
+der Bot den stärksten Punkt ausdrücklich und ergänzt eine weiterführende Frage.
+
+Im Vergleich zu bestehenden textgenerativen Reflexionswerkzeugen wie \glqq Reflect Me\grqq{}
+\cite{mollerReflectMeTextgenerative2025}, das allgemeine Reflexionsimpulse zu frei wählbaren
+Themen gibt, ist der hier entwickelte Reflexionsbot bewusst enger gefasst: Er kennt die konkreten
+Entscheidungssituationen beider Szenarien im Detail und kann seine Rückfragen daher gezielt auf die
+jeweilige Prozessentscheidung sowie die dort relevanten Randbedingungen zuschneiden, statt allgemein
+gehaltene Reflexionsfragen zu stellen. Diese Szenario-Spezifität ist die Voraussetzung dafür, dass
+die adaptive Tiefe (s.\,o.) inhaltlich präzise auf einzelne Argumentationslücken reagieren kann.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{BotImage.png}
+\caption[Oberfläche des Reflexionsbots mit Beispielverlauf]{Oberfläche des Reflexionsbots
+(Streamlit-Anwendung) mit einem beispielhaften Gesprächsverlauf zur Datensatzentscheidung aus dem
+Szenario SmartDose. Der Verlauf wurde zur Illustration der adaptiven Tiefe nachgestellt und stammt
+nicht aus dem Mini-Experiment.}
+\label{fig:reflexionsbot-ui}
+\end{figure}
+
+
+\section{Konzeption der Szenarien}
+\label{sec:konzeption-szenarien}
+
+Neben dem Reflexionsbot selbst war die Gestaltung der beiden Prozessszenarien SmartDose und
+LearnLoop ein eigenständiger Teil der Konzeption, da die Qualität der möglichen Reflexion maßgeblich
+von der Aufgabenstellung abhängt, auf die sich diese Reflexion bezieht (vollständige
+Szenariobeschreibungen siehe \hyperref[app:szenarien]{Anhang~A.4}).
+
+Beiden Szenarien liegt dasselbe Gestaltungsprinzip zugrunde: Sie bestehen aus jeweils drei
+Dilemma-Situationen, die bewusst keine eindeutig richtige Lösung besitzen, sondern eine Abwägung
+zwischen mehreren vertretbaren, aber jeweils mit Nachteilen behafteten Optionen verlangen. Die
+Aufgabenstellung schließt Ausweichantworten wie \glqq we would do both\grqq{} ausdrücklich aus, um
+eine tatsächliche Entscheidung zu erzwingen. Um diese Abwägung inhaltlich zu verankern, sind beide
+Szenarien um reale regulatorische und organisationale Zwänge herum konstruiert: SmartDose stellt
+Patientensicherheit und Entwicklungsgeschwindigkeit gegen die Vorgaben der EU-Medizinprodukteverordnung
+(MDR), LearnLoop stellt Projektfortschritt in einem verteilten Team gegen Datenschutzanforderungen
+(FERPA) und massive Zeitzonenunterschiede. Beide Konflikte sind so gewählt, dass eine rein technische
+Betrachtung nicht ausreicht, sondern rechtliche, ethische und organisationale Gesichtspunkte
+gegeneinander abgewogen werden müssen.
+
+Jedes Szenario folgt zudem demselben dreistufigen Aufgabenaufbau, den
+Abbildung~\ref{fig:aufgabenaufbau} zusammenfasst. Zunächst analysieren Studierende
+in Task~1, welche Scrum-Elemente im veränderten Kontext noch funktionieren (Verständnis der
+Ausgangslage), anschließend treffen und begründen sie in Task~2 Entscheidungen zu den drei
+Dilemma-Situationen (eigentliche Entscheidungsfindung), und schließlich reflektieren sie in Task~3,
+welche Entscheidung am schwersten fiel und warum (Metareflexion). Bei Team AI folgt darauf ein
+eigenständiger Gegencheck mit einem generischen KI-System, beim Reflexionsbot erfolgt dieser
+Gegencheck bereits im laufenden Dialog mit dem Bot selbst.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[
+	task/.style={rectangle, draw=black!55, fill=black!7, rounded corners, align=center,
+	             text width=7.2cm, minimum height=0.95cm, font=\small, inner sep=5pt},
+	ai/.style={rectangle, draw=codegreen, line width=0.8pt, fill=codegreen!12, rounded corners,
+	           align=center, anchor=north, text width=4.9cm, minimum height=1.5cm,
+	           font=\small, inner sep=5pt},
+	rb/.style={rectangle, draw=codeblue, line width=0.8pt, fill=codeblue!12, rounded corners,
+	           align=center, anchor=north, text width=4.9cm, minimum height=1.5cm,
+	           font=\small, inner sep=5pt},
+	arr/.style={-{Latex[length=2mm]}, draw=black!65}
+	]
+\node[task] (t1) at (0,0)     {\textbf{Task 1 -- Analyse}\\ Welche Scrum-Elemente funktionieren im veränderten Kontext?};
+\node[task] (t2) at (0,-1.85) {\textbf{Task 2 -- Decide}\\ Entscheidung und Begründung zu drei Dilemma-Situationen};
+\node[task] (t3) at (0,-3.7)  {\textbf{Task 3 -- Reflect}\\ Welche Entscheidung fiel am schwersten und warum?};
+
+\node[ai] (ai) at (-2.85,-5.5) {\textbf{Team AI}\\ eigenständiger Gegencheck mit einem generischen KI-System};
+\node[rb] (rb) at (2.85,-5.5)  {\textbf{Reflexionsbot}\\ Gegencheck bereits im laufenden Dialog mit dem Bot};
+
+\draw[arr] (t1) -- (t2);
+\draw[arr] (t2) -- (t3);
+\draw[arr] (t3.south) -- (ai.north);
+\draw[arr] (t3.south) -- (rb.north);
+\end{tikzpicture}
+\caption[Dreistufiger Aufgabenaufbau der Szenarien]{Dreistufiger Aufgabenaufbau der Szenarien. Beide
+Gruppen bearbeiteten Task~1 bis Task~3 mit identischen Aufgabenblättern. Der einzige Unterschied lag
+in der abschließenden Gegenargumentation.}
+\label{fig:aufgabenaufbau}
+\end{figure} Dieser dreistufige Aufbau war notwendig,
+um die in Abschnitt~\ref{sec:datenanalyse} beschriebene Kodierung nach Reflexionsstufen überhaupt an
+einer vergleichbaren Aufgabenstruktur vornehmen zu können.
+
+\section{Technische Umsetzung}
+\label{sec:technische-umsetzung}
+
+Abbildung~\ref{fig:architektur} gibt einen Überblick über die technische Architektur, bevor die
+einzelnen Entwurfsentscheidungen im Detail erläutert werden: Studierende interagieren über den
+Browser mit der Streamlit-Anwendung, die Eingaben entgegennimmt, den Sitzungszustand verwaltet und
+bei jeder Anfrage die Systemnachricht zusammen mit dem bisherigen Gesprächsverlauf an die
+Chat-Completions-API von OpenAI übergibt. Die Anwendung selbst läuft containerisiert in Docker.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+	box/.style={rectangle, draw, rounded corners, align=center, minimum height=1.1cm,
+	            text width=4.8cm, font=\small, inner sep=6pt},
+	extern/.style={box, draw=black!55, fill=black!7},
+	eigen/.style={box, draw=codeblue, line width=0.9pt, fill=codeblue!12},
+	arr/.style={{Latex[length=2mm]}-{Latex[length=2mm]}, draw=black!70},
+	lbl/.style={font=\scriptsize, fill=white, inner sep=2.5pt, align=center}
+	]
+	\node[extern] (user) {Studierende (Browser)};
+	\node[eigen, below=2.9cm of user] (streamlit) {Streamlit-App\\(Frontend und \texttt{session\_state})};
+	\node[extern, below=2.9cm of streamlit] (api) {OpenAI Chat-Completions-API\\(\texttt{gpt-4o-mini})};
+
+	\draw[arr] (user) -- node[lbl] {Eingabe / Anzeige} (streamlit);
+	\draw[arr] (streamlit) -- node[lbl] {Systemprompt + Verlauf /\\Streaming-Antwort} (api);
+
+	\begin{scope}[on background layer]
+	\node[draw=codeblue!55, dashed, rounded corners, fill=codeblue!4,
+	      fit=(streamlit), inner sep=13pt,
+	      label={[font=\scriptsize, text=codeblue!80]above right:Docker-Container}] {};
+	\end{scope}
+\end{tikzpicture}
+\caption{Vereinfachte Architektur des Reflexionsbots}
+\label{fig:architektur}
+\end{figure}
+
+\subsection{Frontend-Auswahl: Streamlit vs. Gradio}
+Für die Umsetzung des Chat-Interfaces standen Streamlit \cite{streamlitSessionState2024} und
+Gradio \cite{gradioChatInterface2024} zur Auswahl, da beide Frameworks eine schnelle Entwicklung
+von Python-basierten Web-Anwendungen ohne separaten Frontend-Stack ermöglichen.
+Tabelle~\ref{tab:streamlit-gradio} stellt beide Frameworks anhand der für den Reflexionsbot
+relevanten Kriterien gegenüber \cite{streamlitSessionState2024, gradioChatInterface2024}.
+
+\begin{table}[htb]
+\centering
+\caption{Vergleich von Streamlit und Gradio als Frontend-Framework}
+\label{tab:streamlit-gradio}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.31\textwidth}
+                >{\raggedright\arraybackslash}p{0.29\textwidth}
+                >{\raggedright\arraybackslash}p{0.25\textwidth}}
+\toprule
+\textbf{Kriterium} & \textbf{Streamlit} & \textbf{Gradio} \\
+\midrule
+Vorgefertigte Chat-Komponenten &
+Nicht enthalten, Chat-Oberfläche muss selbst aufgebaut werden &
+Vorhanden, dadurch schneller einsatzbereiter Prototyp \\
+\midrule
+Mehrere parallele Chat-Sitzungen &
+Über \texttt{session\_state} flexibel umsetzbar &
+Nicht für diesen Anwendungsfall vorgesehen \\
+\midrule
+Export der Gesprächsverläufe &
+Direkter Zugriff auf den Sitzungszustand, frei exportierbar &
+Nur eingeschränkt vorgesehen \\
+\midrule
+Kontrolle über Layout und Zustandsverwaltung &
+Umfangreich, da als vollwertige Webanwendung strukturierbar &
+Eingeschränkt, komponentenbasiert \\
+\midrule
+Einbettung in ein größeres Analyse-Dashboard &
+Gut geeignet &
+Primär auf einzelne Modell-Demos zugeschnitten \\
+\midrule
+Entwicklungs\-geschwindig\-keit für einfachen Prototyp &
+Etwas höherer Aufwand &
+Sehr schnell \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Gradio ist stärker auf einzelne Modell-Demos zugeschnitten und bietet vorgefertigte
+Chat-Komponenten, die für einen einfachen Chatbot-Prototyp schneller einsatzbereit sind. Da der
+Reflexionsbot jedoch mehrere parallele Chat-Sitzungen verwalten, Gesprächsverläufe für die
+spätere Auswertung exportieren und sich potenziell in ein größeres Analyse-Dashboard einbetten
+lassen sollte, fiel die Wahl auf Streamlit, das bei diesen Anforderungen mehr Kontrolle über
+Layout und Zustandsverwaltung bietet.
+
+\subsection{Implementierung}
+Die Anwendung wurde vollständig in Python umgesetzt. Der Chatverlauf jeder Sitzung wird im
+Streamlit-\texttt{session\_state} als Liste von Nachrichten verwaltet. Über eine Seitenleiste
+lassen sich mehrere Chats parallel anlegen, wechseln und als Textdatei herunterladen. Der
+Titel eines Chats wird automatisch aus der ersten Eingabe der Studierenden abgeleitet.
+
+Die Entscheidung für die OpenAI-\acrshort{api} gegenüber einem lokal betriebenen Modell begründet
+sich in mehreren Faktoren: Der Betrieb leistungsfähiger \glspl{llm} erfordert erhebliche
+Rechenressourcen, die im Rahmen dieser Arbeit nicht verfügbar waren. Zusätzlich bieten Modelle der
+\acrshort{gpt}-4-Familie eine hohe Qualität bei Sprachverarbeitung und Gesprächsführung
+\cite{openaiGPT4TechnicalReport2023}, und die REST-basierte Schnittstelle lässt sich ohne aufwendige
+Infrastruktur direkt in Webanwendungen integrieren \cite{openaiChatCompletionsAPI2024}.
+
+Die Anbindung an das Sprachmodell erfolgt über die in
+Abschnitt~\ref{sec:relevante-technologien-und-konzepte} beschriebene
+Chat-Completions-\acrshort{api} von OpenAI \cite{openaiChatCompletionsAPI2024}, wobei als
+Modell \texttt{gpt-4o-mini} verwendet wird. Die Wahl der ressourcenschonenden mini-Variante
+gegenüber dem größeren \texttt{gpt-4o} folgt der in Abschnitt~\ref{sec:anforderungen} formulierten
+Anforderung eines angemessenen Verhältnisses von Antwortqualität und Kosten, da während der Übung
+mehrere Studierende die Anwendung gleichzeitig nutzen sollten. Für die vom Bot benötigten Rückfragen
+war die Qualität der mini-Variante ausreichend. Bei jeder Anfrage wird die
+Systemnachricht (vgl. Abschnitt~\ref{sec:konzept-reflexionsbot}; vollständiger Wortlaut in
+\hyperref[app:systemprompt]{Anhang~A.7}) zusammen mit dem vollständigen bisherigen Gesprächsverlauf an das Modell übergeben, damit der
+Kontext über mehrere Gesprächsrunden erhalten bleibt. Die Antwort wird gestreamt
+(\texttt{stream=True}) an die Oberfläche ausgegeben, sodass Studierende die Antwort des
+Bots bereits während der Generierung lesen können, statt auf die vollständige Antwort
+warten zu müssen. Abbildung~\ref{fig:api-call} zeigt diesen zentralen Mechanismus anhand des
+tatsächlich eingesetzten Codes.
+
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Python]
+# The Chat Completions API is stateless: it has no memory of earlier
+# calls, so the system prompt and the full message history are sent
+# again with every request to keep the model's context consistent.
+conversation = [{"role": "system", "content": SYSTEM_PROMPT}]
+conversation.extend(
+    {"role": m["role"], "content": m["content"]}
+    for m in current_messages
+)
+stream = client.chat.completions.create(
+    model=st.session_state["openai_model"],
+    messages=conversation,
+    stream=True,
+)
+response = st.write_stream(stream)
+\end{lstlisting}
+\caption{Aufbau der Nachrichtenliste und Streaming-Aufruf der Chat-Completions-API}
+\label{fig:api-call}
+\end{figure}
+
+Für die Durchführung des Mini-Experiments wurde die Anwendung containerisiert
+(Docker) und öffentlich erreichbar bereitgestellt, sodass Studierende unabhängig von
+lokalen Python-Installationen darauf zugreifen konnten.

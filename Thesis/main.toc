@@ -1,0 +1,64 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {chapter}{Kurzfassung}{ii}{chapter*.1}%
+\contentsline {chapter}{Abstract}{iii}{chapter*.2}%
+\contentsline {chapter}{Eidesstattliche Erklärung}{iv}{chapter*.3}%
+\contentsline {chapter}{\nonumberline Abkürzungsverzeichnis}{viii}{chapter*.5}%
+\contentsline {chapter}{Abbildungsverzeichnis}{ix}{chapter*.5}%
+\contentsline {chapter}{Tabellenverzeichnis}{x}{chapter*.6}%
+\contentsline {chapter}{\numberline {1}Einleitung, Motivation und Zielsetzung}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problemstellung}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Zielsetzung und Forschungsfragen}{4}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Abgrenzung des Untersuchungsrahmens}{5}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Beitrag der Arbeit}{6}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Theoretische Grundlagen}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Relevante Technologien und Konzepte}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Large Language Models (LLMs)}{7}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Chat-Completions-API und Systemnachricht}{8}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Prompt Engineering}{9}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Scaffolding und Sokratisches Fragen}{10}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Reflexion und Reflexionsstufenmodelle}{11}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Mixed-Methods-Forschungsdesign}{12}{subsection.2.1.6}%
+\contentsline {section}{\numberline {2.2}Stand der Technik}{13}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Generative KI in der Hochschullehre}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Chatbots und KI-Tutoren im Bildungsbereich}{15}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Reflexion und Scaffolding-Ansätze}{15}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Vergleich und Einordnung}{16}{subsection.2.2.4}%
+\contentsline {chapter}{\numberline {3}Methodik}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Forschungsdesign}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Datenerhebung}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Stichprobe}{21}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Fragebogen und Mini-Experiment}{23}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Datenanalyse}{27}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Gütekriterien}{29}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Forschungsethik und Datenschutz}{30}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Konzeptionierung}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Anforderungen an das System}{31}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Konzept des Reflexionsbots}{32}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Konzeption der Szenarien}{35}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Technische Umsetzung}{37}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Frontend-Auswahl: Streamlit vs. Gradio}{37}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Implementierung}{38}{subsection.4.4.2}%
+\contentsline {chapter}{\numberline {5}Ergebnisse}{41}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Deskriptiver Überblick}{41}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Illustration des Kategoriensystems an realen Entscheidungssituationen}{44}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Selbstauskunft und dokumentiertes Bearbeitungsverhalten}{46}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Diskussion}{47}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Beantwortung der Forschungsfragen}{47}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Einordnung in den Forschungsstand}{50}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Limitationen}{52}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Handlungsempfehlungen für den Einsatz in der Software-Engineering-Lehre}{55}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Ausblick}{56}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Fazit}{58}{chapter.7}%
+\contentsline {chapter}{\nonumberline Literatur}{60}{chapter*.8}%
+\contentsline {chapter}{Anhang}{68}{chapter*.9}%
+\contentsline {section}{A.1 Kategoriensystem der qualitativen Inhaltsanalyse}{68}{section*.10}%
+\contentsline {section}{A.2 Vollständige Kodierungstabelle}{70}{section*.11}%
+\contentsline {section}{A.3 Häufigkeitsverteilung je Gruppe}{73}{section*.12}%
+\contentsline {section}{A.4 Vollständige Szenariobeschreibungen}{74}{section*.13}%
+\contentsline {section}{A.5 Eingesetzte Fragebögen}{77}{section*.14}%
+\contentsline {section}{A.6 Deskriptive Statistik der Fragebogenitems}{79}{section*.15}%
+\contentsline {section}{A.7 Systemnachricht des Reflexionsbots}{84}{section*.16}%
+\contentsline {section}{A.8 Verwendete KI-Werkzeuge}{86}{section*.17}%
+\contentsline {section}{A.9 Digitaler Anhang}{87}{section*.18}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
